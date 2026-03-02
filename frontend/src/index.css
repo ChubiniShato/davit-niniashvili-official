@@ -1,0 +1,154 @@
+:root {
+  --brand-gray: #E0E0E0;
+  /* Light gray replacement */
+  --brand-yellow: #E8A800;
+  /* Brand Gold */
+  --brand-glow: 0 0 10px rgba(232, 168, 0, 0.4);
+  /* Subtle Brand Glow */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .brand-title-ka {
+    @apply font-georgian font-bold leading-none whitespace-nowrap tracking-brand-ka text-brand-ka md:text-brand-ka-md;
+  }
+
+  .brand-title-en {
+    @apply font-header font-bold leading-none whitespace-nowrap uppercase tracking-brand-en text-brand-en md:text-brand-en-md;
+  }
+
+  .nav-link-ka {
+    @apply tracking-nav-ka text-nav-ka md:text-nav-ka-md font-semibold;
+  }
+
+  .nav-link-en {
+    @apply uppercase tracking-nav-en text-nav-en md:text-nav-en-md font-semibold;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-off-white font-primary antialiased overflow-x-hidden selection:bg-neon-blue selection:text-off-black;
+  }
+}
+
+@layer utilities {
+
+  /* 1. VISUAL LANGUAGE: GRAIN (Optional/Controlled) */
+  .bg-grain {
+    position: relative;
+  }
+
+  .bg-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 10;
+  }
+
+  /* 2. VISUAL LANGUAGE: HIERARCHY */
+  .text-lead {
+    @apply text-off-white font-bold leading-tight;
+  }
+
+  .text-support {
+    @apply text-mid-grey font-secondary text-xs tracking-widest uppercase;
+  }
+
+  .text-ghost {
+    @apply text-dark-grey font-primary font-black uppercase tracking-tighter opacity-50;
+  }
+
+  .text-spark {
+    @apply text-neon-blue;
+  }
+
+  /* 3. VISUAL LANGUAGE: FOCUS (Precision) */
+  .focus-precision:focus-visible {
+    @apply outline-none border-neon-blue ring-1 ring-neon-blue/50;
+  }
+
+  /* UTILITIES */
+  .stroke-text {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom Scrollbar for global window */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Custom Cursor Logic */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #00f0ff;
+  /* neon-blue */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cursor-dot.hovered {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid #00f0ff;
+}
+
+/* Keyframes */
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

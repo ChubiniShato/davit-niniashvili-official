@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: davit_db
+    environment:
+      POSTGRES_DB: davit_website
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - rugby-net
+
+  backend:
+    build: ./backend
+    container_name: davit_backend
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/davit_website
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - postgres
+    networks:
+      - rugby-net
+
+  frontend:
+    build: ./frontend
+    container_name: davit_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - rugby-net
+
+volumes:
+  db-data:
+
+
+networks:
+  rugby-net:
+    driver: bridge
