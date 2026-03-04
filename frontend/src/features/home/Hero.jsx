@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 
 const CLIPS = [
@@ -286,26 +287,30 @@ const Hero = () => {
             </div>
 
             {/* Cinematic Signature Slogan */}
-            <div className="absolute bottom-[14%] left-[7%] z-10 pointer-events-none">
+            <div className="absolute bottom-[14%] left-[7%] z-10">
                 <style>{`
                     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
                     .slogan-reveal { animation: fadeIn 1.5s ease-out 1.8s forwards; opacity: 0; }
                 `}</style>
-                <p className="slogan-reveal font-secondary text-xl md:text-2xl font-extrabold tracking-tight italic text-[var(--brand-gray)]">
-                    {language === 'ka' ? 'მთელი გულით!' :
-                        language === 'fr' ? 'De tout cœur!' :
-                            'Wholeheartedly!'}
-                </p>
+                <Link to="/#authority-section" className="group no-underline">
+                    <p className="slogan-reveal font-secondary text-xl md:text-2xl font-extrabold tracking-tight italic text-[var(--brand-gray)] hover:text-off-white border-b border-transparent group-hover:border-rochelais-gold transition-all duration-300 cursor-pointer inline-block">
+                        {language === 'ka' ? 'მთელი გულით!' :
+                            language === 'fr' ? 'De tout cœur!' :
+                                'Wholeheartedly!'}
+                    </p>
+                </Link>
             </div>
 
             {/* Sponsor Badge */}
-            <div className="absolute bottom-[5%] md:bottom-[6%] right-[5%] z-10 pointer-events-none">
+            <div className="absolute bottom-[5%] right-[5%] z-10">
                 <style>{`
                     .sponsor-badge { animation: fadeIn 1.5s ease-out 2.5s forwards; opacity: 0; }
                 `}</style>
-                <p className="sponsor-badge font-secondary text-xs tracking-widest uppercase text-off-white/40">
-                    Primary Digital Partner — Available
-                </p>
+                <Link to="/for-brands" className="no-underline">
+                    <span className="sponsor-badge inline-block font-secondary text-xs tracking-widest uppercase text-off-white/40 bg-black/30 border border-rochelais-gold/30 rounded-xl px-3 py-1 hover:text-off-white/70 transition-colors duration-300 cursor-pointer">
+                        Primary Digital Partner — Available
+                    </span>
+                </Link>
             </div>
 
             {/* Scroll Indicator (Static) */}

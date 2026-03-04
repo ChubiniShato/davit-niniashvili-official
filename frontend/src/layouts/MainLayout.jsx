@@ -23,14 +23,9 @@ const MainLayout = ({ children }) => {
         const onScroll = () => {
             cancelAnimationFrame(rafId);
             rafId = requestAnimationFrame(() => {
-                const el = document.getElementById('highlights-section');
-                if (el) {
-                    const sectionTop = el.offsetTop;
-                    const scrollY = window.scrollY;
-                    setActiveSection(scrollY >= sectionTop - 300 ? 'highlights' : 'home');
-                } else {
-                    setActiveSection('home');
-                }
+                const scrollY = window.scrollY;
+                const threshold = window.innerHeight * 0.8;
+                setActiveSection(scrollY >= threshold ? 'scrolled' : 'home');
             });
         };
         // Delayed initial check to ensure DOM is ready
@@ -90,12 +85,11 @@ const MainLayout = ({ children }) => {
     };
 
     const navLinks = [
-        { name: t('nav.gallery'), path: '/gallery' },
-        { name: t('nav.media'), path: '/media' },
         { name: t('nav.career'), path: '/career' },
-        { name: t('nav.bio'), path: '/bio' },
-        { name: t('nav.partners'), path: '/partners' },
+        { name: t('nav.partners'), path: '/partners', isBrand: true },
         { name: t('nav.forBrands'), path: '/for-brands' },
+        { name: t('nav.media'), path: '/media' },
+        { name: t('nav.bio'), path: '/bio' },
         { name: t('nav.contact'), path: '/contact' }
     ];
 
@@ -119,20 +113,16 @@ const MainLayout = ({ children }) => {
                         to="/"
                         end
                         aria-label="Home"
-                        className={({ isActive }) =>
-                            `no-underline transition-all duration-300 ${isActive
-                                ? 'pointer-events-none'
-                                : 'hover:opacity-80'
-                            }`
-                        }
+                        onClick={pathname === '/' ? scrollToTop : undefined}
+                        className="no-underline transition-all duration-300 hover:opacity-80"
                     >
                         <h1
                             className={`transition-all duration-300 cursor-pointer ${language === 'ka'
                                 ? 'brand-title-ka'
                                 : 'brand-title-en'
                                 } ${pathname === '/'
-                                    ? 'text-[var(--brand-gray)] drop-shadow-none'
-                                    : 'text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)]'
+                                    ? (activeSection === 'home' ? 'text-[var(--brand-gray)]' : 'text-[var(--brand-yellow)]')
+                                    : 'text-[var(--brand-yellow)]'
                                 }`}
                         >
                             {language === 'ka' ? 'ᲓᲐᲕᲘᲗ ᲜᲘᲜᲘᲐᲨᲕᲘᲚᲘ' : 'DAVIT NINIASHVILI'}
@@ -140,7 +130,7 @@ const MainLayout = ({ children }) => {
                     </NavLink>
 
                     {/* Desktop Nav Links */}
-                    <ul className="hidden md:flex gap-8 font-secondary">
+                    <ul className="hidden md:flex gap-8 font-secondary items-center">
                         {navLinks.map((item, idx) => (
                             <li key={item.path || `action-${idx}`}>
                                 {item.action ? (
@@ -150,12 +140,27 @@ const MainLayout = ({ children }) => {
                                             ? 'nav-link-ka'
                                             : 'nav-link-en'
                                             } ${activeSection === item.activeId
-                                                ? 'text-[var(--brand-gray)] drop-shadow-none'
-                                                : 'text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none'
+                                                ? 'text-off-white'
+                                                : 'text-off-white/70 hover:text-off-white'
                                             }`}
                                     >
                                         {item.name}
                                     </button>
+                                ) : item.isBrand ? (
+                                    <NavLink
+                                        to={item.path}
+                                        className={({ isActive }) =>
+                                            `transition-all duration-300 px-3 py-1 rounded border ${language === 'ka'
+                                                ? 'nav-link-ka'
+                                                : 'nav-link-en'
+                                            } ${isActive
+                                                ? 'border-rochelais-gold/50 text-rochelais-gold'
+                                                : 'border-rochelais-gold/50 text-rochelais-gold hover:bg-rochelais-gold hover:text-obsidian'
+                                            }`
+                                        }
+                                    >
+                                        {item.name}
+                                    </NavLink>
                                 ) : (
                                     <NavLink
                                         to={item.path}
@@ -164,8 +169,8 @@ const MainLayout = ({ children }) => {
                                                 ? 'nav-link-ka'
                                                 : 'nav-link-en'
                                             } ${isActive
-                                                ? "text-[var(--brand-gray)] drop-shadow-none"
-                                                : "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none"
+                                                ? 'text-off-white'
+                                                : 'text-off-white/70 hover:text-off-white'
                                             }`
                                         }
                                     >
@@ -186,8 +191,8 @@ const MainLayout = ({ children }) => {
                                 key={lang.code}
                                 onClick={() => setLanguage(lang.code)}
                                 className={`font-secondary text-sm md:text-base font-semibold tracking-wider uppercase transition-all duration-300 ${language === lang.code
-                                    ? "text-[var(--brand-gray)] drop-shadow-none"
-                                    : "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none"
+                                    ? 'text-off-white'
+                                    : 'text-off-white/70 hover:text-off-white'
                                     }`}
                             >
                                 {lang.label}
@@ -198,7 +203,7 @@ const MainLayout = ({ children }) => {
                     {/* Mobile Menu Trigger */}
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden font-secondary text-sm font-semibold tracking-wider z-50 relative transition-all duration-300 text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none"
+                        className="md:hidden font-secondary text-sm font-semibold tracking-wider z-50 relative transition-all duration-300 text-off-white/70 hover:text-off-white"
                     >
                         {isMenuOpen ? 'CLOSE' : 'MENU'}
                     </button>
@@ -215,20 +220,33 @@ const MainLayout = ({ children }) => {
                                     <button
                                         onClick={item.action}
                                         className={`font-header text-3xl uppercase tracking-widest transition-all duration-300 ${activeSection === item.activeId
-                                            ? 'text-[var(--brand-gray)] drop-shadow-none'
-                                            : 'text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none'
+                                            ? 'text-off-white'
+                                            : 'text-off-white/70 hover:text-off-white'
                                             }`}
                                     >
                                         {item.name}
                                     </button>
+                                ) : item.isBrand ? (
+                                    <NavLink
+                                        to={item.path}
+                                        onClick={closeMenu}
+                                        className={({ isActive }) =>
+                                            `font-header text-3xl uppercase tracking-widest transition-all duration-300 px-4 py-1 rounded border ${isActive
+                                                ? 'border-rochelais-gold/50 text-rochelais-gold'
+                                                : 'border-rochelais-gold/50 text-rochelais-gold hover:bg-rochelais-gold hover:text-obsidian'
+                                            }`
+                                        }
+                                    >
+                                        {item.name}
+                                    </NavLink>
                                 ) : (
                                     <NavLink
                                         to={item.path}
                                         onClick={closeMenu}
                                         className={({ isActive }) =>
                                             `font-header text-3xl uppercase tracking-widest transition-all duration-300 ${isActive
-                                                ? "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)]"
-                                                : "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none"
+                                                ? 'text-off-white'
+                                                : 'text-off-white/70 hover:text-off-white'
                                             }`
                                         }
                                     >
@@ -248,8 +266,8 @@ const MainLayout = ({ children }) => {
                                     setLanguage(lang.code);
                                 }}
                                 className={`font-secondary text-sm font-semibold tracking-wider uppercase transition-all duration-300 ${language === lang.code
-                                    ? "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)]"
-                                    : "text-[var(--brand-yellow)] drop-shadow-[var(--brand-glow)] hover:text-[var(--brand-gray)] hover:drop-shadow-none"
+                                    ? 'text-off-white'
+                                    : 'text-off-white/70 hover:text-off-white'
                                     }`}
                             >
                                 {lang.label}

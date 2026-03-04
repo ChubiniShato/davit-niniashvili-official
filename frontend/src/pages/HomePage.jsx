@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import Hero from '../features/home/Hero';
-import SloganReveal from '../features/home/SloganReveal';
 import AuthorityStrip from '../features/home/AuthorityStrip';
 import MediaPresence from '../features/home/MediaPresence';
 import { useLanguage } from '../context/LanguageContext';
@@ -28,10 +27,8 @@ const HomePage = () => {
     return (
         <div>
             <Hero />
-            <SloganReveal />
-            <AuthorityStrip />
-            <MediaPresence />
-            <div id="highlights">
+            <div id="authority-section"><AuthorityStrip /></div>
+            <div id="highlights-section" className="pt-16 md:pt-24">
                 <HighlightsSection />
                 <div className="w-full bg-surface-base pb-16 text-center">
                     <Link
@@ -42,9 +39,10 @@ const HomePage = () => {
                     </Link>
                 </div>
             </div>
-            <PartnersSection />
-            <ForBrandsCTA />
-            <Footer />
+            <div id="media-section"><MediaPresence /></div>
+            <div id="partners-section"><PartnersSection /></div>
+            <div id="brands-section"><ForBrandsCTA /></div>
+            <div id="contact-section"><Footer /></div>
         </div>
     );
 };

@@ -38,6 +38,18 @@ const translations = {
         'home.partners.officialAvailable': 'Official Partners — 3 Available',
         'home.forBrands.cta': 'Explore Partnership Options',
         'page.contact.subtitle': 'Get in touch',
+        'home.authority.slogan': 'Love what you do \u2014 wholeheartedly!',
+        'home.authority.status': 'Current \u2014 Top14: Stade Rochelais | Georgia national team',
+        'home.authority.cta.career': 'See Full Career',
+        'home.authority.cta.highlights': 'See Featured Moments',
+        'home.authority.kpis': [
+            '4\u00d7 European Rugby Championship Winner (2021\u20132024)',
+            'EPCR Challenge Cup Winner \u2014 Lyon (2021\u201322)',
+            '46 International Caps \u2014 Georgia (debut 2020)',
+            'Oscars du Midi Olympique Winner (2023)',
+            'RugbyPass Top 100 Player \u2014 #83 (2025)',
+            'Barbarian F.C. Appearance \u2014 80 minutes (2022)',
+        ],
     },
     ka: {
         'nav.home': 'ᲛᲗᲐᲕᲐᲠᲘ',
@@ -74,6 +86,18 @@ const translations = {
         'home.partners.officialAvailable': 'ოფიციალური პარტნიორები — 3 ხელმისაწვდომი',
         'home.forBrands.cta': 'პარტნიორობის ვარიანტები',
         'page.contact.subtitle': 'დაგვიკავშირდით',
+        'home.authority.slogan': 'რასაც აკეთებ — გიყვარდეს მთელი გულით!',
+        'home.authority.status': 'მიმდინარე პერიოდში — Top14: Stade Rochelais | საქართველოს ეროვნული ნაკრები',
+        'home.authority.cta.career': 'იხილეთ სრული კარიერა',
+        'home.authority.cta.highlights': 'იხილეთ გამორჩეული მომენტები',
+        'home.authority.kpis': [
+            '4-\u10d2\u10d6\u10d8\u10e1 \u10d4\u10d5\u10e0\u10dd\u10de\u10d8\u10e1 \u10e0\u10d0\u10d2\u10d1\u10d8\u10e1 \u10e9\u10d4\u10db\u10de\u10d8\u10dd\u10dc\u10d0\u10e2\u10d8\u10e1 \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 (2021\u20132024)',
+            'EPCR Challenge Cup \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 \u2014 Lyon (2021\u201322)',
+            '46 \u10e1\u10d0\u10d4\u10e0\u10d7\u10d0\u10e8\u10dd\u10e0\u10d8\u10e1\u10dd \u10db\u10d0\u10e2\u10e9\u10d8 \u2014 \u10e1\u10d0\u10e5\u10d0\u10e0\u10d7\u10d5\u10d4\u10da\u10dd (\u10d3\u10d4\u10d1\u10d8\u10e3\u10e2\u10d8 2020)',
+            'Oscars du Midi Olympique \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 (2023)',
+            'RugbyPass Top 100 \u10db\u10dd\u10d7\u10d0\u10db\u10d0\u10e8\u10d4 \u2014 #83 (2025)',
+            'Barbarian F.C. \u10d2\u10d0\u10db\u10dd\u10e9\u10d4\u10dc\u10d0 \u2014 80 \u10ec\u10e3\u10d7\u10d8 (2022)',
+        ],
     },
     fr: {
         'nav.home': 'ACCUEIL',
@@ -110,6 +134,18 @@ const translations = {
         'home.partners.officialAvailable': 'Partenaires officiels — 3 disponibles',
         'home.forBrands.cta': 'Découvrir les options',
         'page.contact.subtitle': 'Prendre contact',
+        'home.authority.slogan': 'Aime ce que tu fais \u2014 de tout c\u0153ur !',
+        'home.authority.status': 'Actuellement \u2014 Top14: Stade Rochelais | \u00c9quipe nationale de G\u00e9orgie',
+        'home.authority.cta.career': 'Voir la carri\u00e8re compl\u00e8te',
+        'home.authority.cta.highlights': 'Voir les moments forts',
+        'home.authority.kpis': [
+            '4\u00d7 Vainqueur du Championnat d\u2019Europe de Rugby (2021\u20132024)',
+            'Vainqueur EPCR Challenge Cup \u2014 Lyon (2021\u201322)',
+            '46 s\u00e9lections internationales \u2014 G\u00e9orgie (d\u00e9but 2020)',
+            'Laur\u00e9at Oscars du Midi Olympique (2023)',
+            'Joueur RugbyPass Top 100 \u2014 #83 (2025)',
+            'Barbarian F.C. \u2014 80 minutes (2022)',
+        ],
     }
 };
 
