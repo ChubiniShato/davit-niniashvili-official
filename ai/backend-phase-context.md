@@ -36,9 +36,9 @@ Backend work must support the current business priorities above.
 Allowed active backend domains:
 - player
 - stats
-- award
-- authority highlight
-- content block
+- awards
+- authority highlights
+- content blocks
 - admin auth
 - sync foundation
 
@@ -49,9 +49,8 @@ The following domains are strategic but inactive in the current implementation p
 - shop
 - products
 - orders
-- ecommerce
-- payments
-- merchandise workflows
+- merchandise
+- ecommerce flows
 
 Rule:
 Do not introduce code, schema, endpoints, or refactors for these domains unless explicitly requested.

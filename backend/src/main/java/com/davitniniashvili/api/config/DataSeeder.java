@@ -19,6 +19,15 @@ public class DataSeeder implements CommandLineRunner {
         @Autowired
         private ProductRepository productRepository;
 
+        @Autowired
+        private AwardRepository awardRepository;
+
+        @Autowired
+        private HighlightRepository highlightRepository;
+
+        @Autowired
+        private ContentBlockRepository contentBlockRepository;
+
         @Override
         public void run(String... args) throws Exception {
                 // Seed Player Stats
@@ -69,6 +78,34 @@ public class DataSeeder implements CommandLineRunner {
                                         new BigDecimal("24.99"),
                                         "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800", 75,
                                         "Accessories", "One Size", "Navy", true));
+                }
+
+                // Seed Awards
+                if (awardRepository.count() == 0) {
+                        awardRepository.save(new Award(null, 1L, "Challenge Cup Winner", "2022", null, null,
+                                        "Historic Challenge Cup victory with Lyon.",
+                                        "/images/davit-in-LaRochelle.jpg"));
+                        awardRepository.save(new Award(null, 1L, "Top 14 Breakthrough Player", "2022", null, null,
+                                        "Awarded for outstanding breakthrough performances in the Top 14.",
+                                        "/images/davit-in-GEO-National.jpg"));
+                }
+
+                // Seed Highlights
+                if (highlightRepository.count() == 0) {
+                        highlightRepository.save(new AuthorityHighlight(null, "Quote", "L'Équipe", 
+                                "The Georgian Prodigy", "Davit Niniashvili is redefining the modern fullback position.", 
+                                null, null, "2023", 1, true));
+                        highlightRepository.save(new AuthorityHighlight(null, "Video", "World Rugby", 
+                                "Try of the Year Nominee", "Spectacular length-of-the-field try.", 
+                                "/images/davit-in-LaRochelle.jpg", "https://youtube.com/watch?v=demo", "2022", 2, true));
+                }
+
+                // Seed Content Blocks
+                if (contentBlockRepository.count() == 0) {
+                        contentBlockRepository.save(new ContentBlock(null, "home", "hero", "slogan", "en", 
+                                "CHAOS IS A LADDER.", true));
+                        contentBlockRepository.save(new ContentBlock(null, "home", "for-brands", "pitch", "en", 
+                                "Partner with Davit Niniashvili to elevate your brand presence globally.", true));
                 }
         }
 }
