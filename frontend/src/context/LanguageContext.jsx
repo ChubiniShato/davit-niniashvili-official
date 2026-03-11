@@ -101,10 +101,10 @@ const translations = {
         'home.authority.cta.career': 'იხილეთ სრული კარიერა',
         'home.authority.cta.highlights': 'იხილეთ გამორჩეული მომენტები',
         'home.authority.kpis': [
-            '4-\u10d2\u10d6\u10d8\u10e1 \u10d4\u10d5\u10e0\u10dd\u10de\u10d8\u10e1 \u10e0\u10d0\u10d2\u10d1\u10d8\u10e1 \u10e9\u10d4\u10db\u10de\u10d8\u10dd\u10dc\u10d0\u10e2\u10d8\u10e1 \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 (2021\u20132024)',
+            '5-გზის ევროპის რაგბის ჩემპიონატის გამარჯვებული (2021–2025)',
             'EPCR Challenge Cup \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 \u2014 Lyon (2021\u201322)',
             '46 \u10e1\u10d0\u10d4\u10e0\u10d7\u10d0\u10e8\u10dd\u10e0\u10d8\u10e1\u10dd \u10db\u10d0\u10e2\u10e9\u10d8 \u2014 \u10e1\u10d0\u10e5\u10d0\u10e0\u10d7\u10d5\u10d4\u10da\u10dd (\u10d3\u10d4\u10d1\u10d8\u10e3\u10e2\u10d8 2020)',
-            'Oscars du Midi Olympique \u10d2\u10d0\u10db\u10d0\u10e0\u10ef\u10d5\u10d4\u10d1\u10e3\u10da\u10d8 (2023)',
+            'un Oscar Midi Olympique მფლობელი (2023)',
             'RugbyPass Top 100 \u10db\u10dd\u10d7\u10d0\u10db\u10d0\u10e8\u10d4 \u2014 #83 (2025)',
             'Barbarian F.C. \u10d2\u10d0\u10db\u10dd\u10e9\u10d4\u10dc\u10d0 \u2014 80 \u10ec\u10e3\u10d7\u10d8 (2022)',
         ],

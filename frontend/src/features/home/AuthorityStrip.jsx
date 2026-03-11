@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 
 const AuthorityStrip = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const sectionRef = useRef(null);
 
     useEffect(() => {
@@ -65,10 +65,10 @@ const AuthorityStrip = () => {
 
                 {/* 1. Slogan / Signature */}
                 <div className="text-center mb-10 md:mb-14 reveal-on-scroll opacity-0 translate-y-4 transition-all duration-1000 ease-out">
-                    <p className="font-secondary text-2xl md:text-3xl lg:text-4xl font-extrabold italic text-off-white/90 mb-4 tracking-tight">
+                    <p className={`font-secondary font-extrabold italic text-off-white/90 mb-4 ${language === 'ka' ? 'text-2xl md:text-3xl tracking-normal' : 'text-3xl md:text-4xl tracking-tight'}`}>
                         "{slogan}"
                     </p>
-                    <p className="font-secondary text-xs md:text-sm text-rochelais-gold/90 uppercase tracking-widest">
+                    <p className={`font-secondary text-rochelais-gold/90 uppercase tracking-widest ${language === 'ka' ? 'text-xs' : 'text-sm'}`}>
                         {author}
                     </p>
                 </div>
