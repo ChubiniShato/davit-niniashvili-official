@@ -249,7 +249,7 @@ const Hero = () => {
             <video
                 ref={videoRef}
                 className="w-full h-full object-cover relative z-0"
-                style={{ visibility: 'hidden', transition: 'none' }}
+                style={{ visibility: 'hidden', transition: 'none', filter: 'saturate(0.88) contrast(1.08) brightness(0.96)' }}
                 playsInline
                 muted
                 preload="auto"
@@ -260,7 +260,7 @@ const Hero = () => {
             <div
                 className="absolute inset-0 z-[1] pointer-events-none"
                 style={{
-                    background: 'linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.25) 70%, rgba(10,10,10,0.65) 100%)',
+                    background: 'linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.25) 75%, rgba(10,10,10,0.95) 100%)',
                 }}
             />
 
@@ -290,10 +290,29 @@ const Hero = () => {
             <div className="absolute bottom-[14%] left-[7%] z-10">
                 <style>{`
                     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                    @keyframes subtlePulseScroll { 
+                        0%, 100% { opacity: 0.7; transform: translate(0, 0); } 
+                        50% { opacity: 1; transform: translate(-3px, 3px); } 
+                    }
                     .slogan-reveal { animation: fadeIn 1.5s ease-out 1.8s forwards; opacity: 0; }
+                    .scroll-arrow-cue { animation: subtlePulseScroll 2.5s ease-in-out infinite; }
                 `}</style>
-                <Link to="/#authority-section" className="group no-underline">
-                    <p className="slogan-reveal font-secondary text-xl md:text-2xl font-extrabold tracking-tight italic text-[var(--brand-gray)] hover:text-off-white border-b border-transparent group-hover:border-rochelais-gold transition-all duration-300 cursor-pointer inline-block">
+                <Link to="/#authority-section" className="group no-underline slogan-reveal inline-flex items-center">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-rochelais-gold mr-2 scroll-arrow-cue group-hover:opacity-100 transition-opacity duration-300"
+                    >
+                        <line x1="17" y1="7" x2="7" y2="17"></line>
+                        <polyline points="17 17 7 17 7 7"></polyline>
+                    </svg>
+                    <p className="font-secondary text-xl md:text-2xl font-extrabold tracking-tight italic text-[var(--brand-gray)] hover:text-off-white border-b border-transparent group-hover:border-rochelais-gold transition-all duration-300 cursor-pointer mb-0">
                         {language === 'ka' ? 'მთელი გულით!' :
                             language === 'fr' ? 'De tout cœur!' :
                                 'Wholeheartedly!'}
@@ -311,13 +330,6 @@ const Hero = () => {
                         Primary Digital Partner — Available
                     </span>
                 </Link>
-            </div>
-
-            {/* Scroll Indicator (Static) */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 opacity-30 pointer-events-none pb-0 z-20">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-                    <path d="M12 17.5L5 10.5L6.4 9.1L12 14.7L17.6 9.1L19 10.5L12 17.5Z" />
-                </svg>
             </div>
         </div>
     );

@@ -106,7 +106,7 @@ const MainLayout = ({ children }) => {
         <div className="min-h-screen bg-obsidian text-off-white selection:bg-rochelais-gold selection:text-obsidian overflow-x-hidden relative">
 
             {/* Primary Header */}
-            <header className="fixed top-0 left-0 w-full z-50 h-header px-6 flex justify-between items-center bg-obsidian">
+            <header className={`fixed top-0 left-0 w-full z-50 h-header px-6 flex justify-between items-center transition-all duration-300 ${pathname === '/' ? (activeSection === 'home' ? 'bg-gradient-to-b from-black/45 via-black/15 to-transparent' : 'bg-obsidian/70 backdrop-blur-lg border-b border-white/10') : 'bg-obsidian'}`}>
                 {/* Left: Logo + Nav Links */}
                 <div className="flex items-center gap-8">
                     <NavLink
@@ -120,8 +120,8 @@ const MainLayout = ({ children }) => {
                             className={`transition-all duration-300 cursor-pointer ${language === 'ka'
                                 ? 'brand-title-ka'
                                 : 'brand-title-en'
-                                } ${pathname === '/'
-                                    ? (activeSection === 'home' ? 'text-[var(--brand-gray)]' : 'text-[var(--brand-yellow)]')
+                                } ${pathname === '/' && activeSection === 'home'
+                                    ? 'text-[var(--brand-gray)]'
                                     : 'text-[var(--brand-yellow)]'
                                 }`}
                         >
