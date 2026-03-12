@@ -28,6 +28,9 @@ public class DataSeeder implements CommandLineRunner {
         @Autowired
         private ContentBlockRepository contentBlockRepository;
 
+        @Autowired
+        private PlayerProfileRepository playerProfileRepository;
+
         @Override
         public void run(String... args) throws Exception {
                 // Seed Player Stats
@@ -106,6 +109,20 @@ public class DataSeeder implements CommandLineRunner {
                                 "CHAOS IS A LADDER.", true));
                         contentBlockRepository.save(new ContentBlock(null, "home", "for-brands", "pitch", "en", 
                                 "Partner with Davit Niniashvili to elevate your brand presence globally.", true));
+                }
+
+                // Seed Player Profile
+                if (playerProfileRepository.count() == 0) {
+                        playerProfileRepository.save(new PlayerProfile(
+                                        null,
+                                        "Davit Niniashvili",
+                                        "Winger / Fullback",
+                                        "Georgian",
+                                        "July 14, 2002",
+                                        "Stade Rochelais (La Rochelle)",
+                                        "Lyon (LOU Rugby)",
+                                        "Davit Niniashvili is a highly promising Georgian rugby union player known for his chaotic brilliance, exceptional pace, and unpredictable style. He has rapidly gained international recognition and played a pivotal role in Lyon's 2022 Challenge Cup victory."
+                        ));
                 }
         }
 }

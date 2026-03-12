@@ -7,6 +7,9 @@ import com.davitniniashvili.api.repository.PlayerStatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
+import com.davitniniashvili.api.model.PlayerProfile;
+import com.davitniniashvili.api.service.PlayerProfileService;
 
 @RestController
 @RequestMapping("/api/content")
@@ -18,6 +21,9 @@ public class PublicContentController {
 
     @Autowired
     private MediaItemRepository mediaItemRepository;
+
+    @Autowired
+    private PlayerProfileService playerProfileService;
 
     @GetMapping("/stats")
     public List<PlayerStat> getAllStats() {
@@ -31,6 +37,20 @@ public class PublicContentController {
 
     @GetMapping("/bio")
     public BioResponse getBio() {
+        Optional<PlayerProfile> profileOpt = playerProfileService.findFirst();
+        if (profileOpt.isPresent()) {
+            PlayerProfile p = profileOpt.get();
+            BioResponse bio = new BioResponse();
+            bio.setName(p.getName());
+            bio.setPosition(p.getPosition());
+            bio.setNationality(p.getNationality());
+            bio.setBirthDate(p.getBirthDate());
+            bio.setCurrentTeam(p.getCurrentTeam());
+            bio.setPreviousTeam(p.getPreviousTeam());
+            bio.setDescription(p.getDescription());
+            return bio;
+        }
+        // Fallback: hardcoded until PlayerProfile row is seeded
         BioResponse bio = new BioResponse();
         bio.setName("Davit Niniashvili");
         bio.setPosition("Winger / Fullback");
