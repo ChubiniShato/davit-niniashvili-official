@@ -35,4 +35,25 @@ public class SyncLogService {
         );
         return syncLogRepository.save(entry);
     }
+
+    public SyncLog start(String jobName) {
+        SyncLog entry = new SyncLog(
+                null,
+                jobName,
+                SyncStatus.IN_PROGRESS,
+                Instant.now(),
+                null,
+                null,
+                null
+        );
+        return syncLogRepository.save(entry);
+    }
+
+    public SyncLog complete(SyncLog log, SyncStatus status, Integer recordsProcessed, String errorMessage) {
+        log.setStatus(status);
+        log.setCompletedAt(Instant.now());
+        log.setRecordsProcessed(recordsProcessed);
+        log.setErrorMessage(errorMessage);
+        return syncLogRepository.save(log);
+    }
 }
