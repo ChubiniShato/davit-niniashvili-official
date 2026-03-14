@@ -17,8 +17,6 @@ public class AwardController {
 
     @GetMapping
     public List<Award> getAwards() {
-        // Without a specific player_id in route, we just return all for now.
-        // Once Auth/Player domains mature, this could be filtered.
         return awardRepository.findAll();
     }
 }

@@ -103,7 +103,7 @@ const CareerPage = () => {
                                 <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Matches</th>
                                 <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Tries</th>
                                 <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Meters</th>
-                                <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Tackles</th>
+                                <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Defenders Beaten</th>
                                 <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Line Breaks</th>
                                 <th className="p-4 px-6 font-secondary text-xs uppercase tracking-widest text-rochelais-gold text-right">Offloads</th>
                             </tr>
@@ -135,7 +135,7 @@ const CareerPage = () => {
                                         <Typography variant="body">{stat.meters ?? "—"}</Typography>
                                     </td>
                                     <td className="p-4 px-6 text-right">
-                                        <Typography variant="body">{stat.tackles ?? "—"}</Typography>
+                                        <Typography variant="body">{stat.defendersBeaten ?? "—"}</Typography>
                                     </td>
                                     <td className="p-4 px-6 text-right">
                                         <Typography variant="body">{stat.lineBreaks ?? "—"}</Typography>
