@@ -5,7 +5,9 @@ import com.davitniniashvili.api.dto.PlayerProfileRequest;
 import com.davitniniashvili.api.model.PlayerProfile;
 import com.davitniniashvili.api.service.PlayerProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -19,6 +21,13 @@ public class PlayerProfileController {
 
     @PutMapping
     public ApiResponse<PlayerProfile> updateProfile(@RequestBody PlayerProfileRequest request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "PlayerProfile name is required");
+        }
+        if (request.getPosition() == null || request.getPosition().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "PlayerProfile position is required");
+        }
+
         Optional<PlayerProfile> existing = playerProfileService.findFirst();
         PlayerProfile profile = existing.orElseGet(PlayerProfile::new);
         profile.setName(request.getName());

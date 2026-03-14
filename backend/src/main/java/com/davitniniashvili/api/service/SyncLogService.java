@@ -6,6 +6,7 @@ import com.davitniniashvili.api.repository.SyncLogRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 public class SyncLogService {
@@ -55,5 +56,9 @@ public class SyncLogService {
         log.setRecordsProcessed(recordsProcessed);
         log.setErrorMessage(errorMessage);
         return syncLogRepository.save(log);
+    }
+
+    public Optional<SyncLog> findLatestByJob(String jobName) {
+        return syncLogRepository.findTopByJobNameOrderByStartedAtDesc(jobName);
     }
 }
