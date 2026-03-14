@@ -36,22 +36,13 @@ public class PublicContentController {
     }
 
     @GetMapping("/bio")
-    public BioResponse getBio() {
+    public PlayerProfile getBio() {
         Optional<PlayerProfile> profileOpt = playerProfileService.findFirst();
         if (profileOpt.isPresent()) {
-            PlayerProfile p = profileOpt.get();
-            BioResponse bio = new BioResponse();
-            bio.setName(p.getName());
-            bio.setPosition(p.getPosition());
-            bio.setNationality(p.getNationality());
-            bio.setBirthDate(p.getBirthDate());
-            bio.setCurrentTeam(p.getCurrentTeam());
-            bio.setPreviousTeam(p.getPreviousTeam());
-            bio.setDescription(p.getDescription());
-            return bio;
+            return profileOpt.get();
         }
         // Fallback: hardcoded until PlayerProfile row is seeded
-        BioResponse bio = new BioResponse();
+        PlayerProfile bio = new PlayerProfile();
         bio.setName("Davit Niniashvili");
         bio.setPosition("Winger / Fullback");
         bio.setNationality("Georgian");
@@ -61,71 +52,5 @@ public class PublicContentController {
         bio.setDescription(
                 "Davit Niniashvili is a highly promising Georgian rugby union player known for his chaotic brilliance, exceptional pace, and unpredictable style. He has rapidly gained international recognition and played a pivotal role in Lyon's 2022 Challenge Cup victory.");
         return bio;
-    }
-
-    static class BioResponse {
-        private String name;
-        private String position;
-        private String nationality;
-        private String birthDate;
-        private String currentTeam;
-        private String previousTeam;
-        private String description;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPosition() {
-            return position;
-        }
-
-        public void setPosition(String position) {
-            this.position = position;
-        }
-
-        public String getNationality() {
-            return nationality;
-        }
-
-        public void setNationality(String nationality) {
-            this.nationality = nationality;
-        }
-
-        public String getBirthDate() {
-            return birthDate;
-        }
-
-        public void setBirthDate(String birthDate) {
-            this.birthDate = birthDate;
-        }
-
-        public String getCurrentTeam() {
-            return currentTeam;
-        }
-
-        public void setCurrentTeam(String currentTeam) {
-            this.currentTeam = currentTeam;
-        }
-
-        public String getPreviousTeam() {
-            return previousTeam;
-        }
-
-        public void setPreviousTeam(String previousTeam) {
-            this.previousTeam = previousTeam;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
     }
 }

@@ -1,6 +1,5 @@
 package com.davitniniashvili.api.controller;
 
-import com.davitniniashvili.api.dto.ApiResponse;
 import com.davitniniashvili.api.model.Award;
 import com.davitniniashvili.api.repository.AwardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,9 @@ public class AwardController {
     private AwardRepository awardRepository;
 
     @GetMapping
-    public ApiResponse<List<Award>> getAwards() {
+    public List<Award> getAwards() {
         // Without a specific player_id in route, we just return all for now.
         // Once Auth/Player domains mature, this could be filtered.
-        List<Award> awards = awardRepository.findAll();
-        return ApiResponse.success(awards);
+        return awardRepository.findAll();
     }
 }
