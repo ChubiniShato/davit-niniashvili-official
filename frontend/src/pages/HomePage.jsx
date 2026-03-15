@@ -18,19 +18,27 @@ const HomePage = () => {
             const id = location.hash.replace('#', '');
             const el = document.getElementById(id);
             if (el) {
+                const HEADER_OFFSET = 64;
                 setTimeout(() => {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+                    window.scrollTo({ top, behavior: 'smooth' });
                 }, 50);
             }
         }
     }, [location]);
+
     return (
         <div>
             <Hero />
-            <div id="authority-section"><AuthorityStrip /></div>
-            <div id="partners-section"><PartnersSection /></div>
-            <div id="brands-section"><ForBrandsCTA /></div>
-            <div id="media-section"><MediaPresence /></div>
+            <div id="authority-section">
+                <AuthorityStrip />
+            </div>
+            <div id="media-section">
+                <MediaPresence />
+            </div>
+            <div id="partners-section">
+                <PartnersSection />
+            </div>
             <div id="highlights-section" className="pt-16 md:pt-24">
                 <HighlightsSection />
                 <div className="w-full bg-surface-base pb-16 text-center">
@@ -42,7 +50,12 @@ const HomePage = () => {
                     </Link>
                 </div>
             </div>
-            <div id="contact-section"><Footer /></div>
+            <div id="brands-section">
+                <ForBrandsCTA />
+            </div>
+            <div id="contact-section">
+                <Footer />
+            </div>
         </div>
     );
 };

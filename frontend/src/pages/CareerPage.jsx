@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Section from '../ui/Section';
 import Typography from '../ui/Typography';
+import { useLanguage } from '../context/LanguageContext';
 import { getStats, getAwards } from '../api/api';
 
 const CareerPage = () => {
+    const { t } = useLanguage();
     const [stats, setStats] = useState([]);
     const [loadingStats, setLoadingStats] = useState(true);
     const [statsError, setStatsError] = useState(false);
@@ -83,7 +85,7 @@ const CareerPage = () => {
     return (
         <Section className="py-24">
             <Typography variant="h1" className="text-rochelais-gold mb-12">
-                Career Stats
+                {t('home.career.title')}
             </Typography>
 
             {stats.length === 0 ? (

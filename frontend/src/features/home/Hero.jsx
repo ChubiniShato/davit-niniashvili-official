@@ -327,7 +327,7 @@ const Hero = () => {
                 `}</style>
                 <Link to="/for-brands" className="no-underline">
                     <span className="sponsor-badge inline-block font-secondary text-xs tracking-widest uppercase text-off-white/40 bg-black/30 border border-rochelais-gold/30 rounded-xl px-3 py-1 hover:text-off-white/70 transition-colors duration-300 cursor-pointer">
-                        Primary Digital Partner — Available
+                        Partner Selection Active
                     </span>
                 </Link>
             </div>

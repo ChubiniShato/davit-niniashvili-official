@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
-// Single source of truth for header height (matches Tailwind spacing.header token)
-const HEADER_HEIGHT_PX = 64;
+
 
 const MainLayout = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { pathname } = useLocation();
     const { language, setLanguage, t } = useLanguage();
-    const [isLangOpen, setIsLangOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
 
     // Track which section is visible on the home page
@@ -54,24 +52,7 @@ const MainLayout = ({ children }) => {
 
     const navigate = useNavigate();
 
-    const scrollToSection = (sectionId) => (e) => {
-        e.preventDefault();
-        closeMenu();
-        const doScroll = () => {
-            const el = document.getElementById(sectionId);
-            if (el) {
-                const offset = HEADER_HEIGHT_PX;
-                const top = el.getBoundingClientRect().top + window.scrollY - offset;
-                window.scrollTo({ top, behavior: 'smooth' });
-            }
-        };
-        if (pathname === '/') {
-            doScroll();
-        } else {
-            navigate('/#' + sectionId);
-            setTimeout(doScroll, 400);
-        }
-    };
+
 
     const scrollToTop = (e) => {
         e.preventDefault();
@@ -85,12 +66,13 @@ const MainLayout = ({ children }) => {
     };
 
     const navLinks = [
-        { name: t('nav.career'), path: '/career' },
-        { name: t('nav.partners'), path: '/partners', isBrand: true },
-        { name: t('nav.forBrands'), path: '/for-brands' },
-        { name: t('nav.media'), path: '/media' },
         { name: t('nav.bio'), path: '/bio' },
-        { name: t('nav.contact'), path: '/contact' }
+        { name: t('nav.career'), path: '/career' },
+        { name: t('nav.media'), path: '/media' },
+        { name: t('nav.partners'), path: '/partners', isBrand: true },
+        { name: t('nav.gallery'), path: '/gallery' },
+        { name: t('nav.contact'), path: '/contact' },
+        { name: t('nav.forBrands'), path: '/for-brands' }
     ];
 
     const languages = [
@@ -131,22 +113,9 @@ const MainLayout = ({ children }) => {
 
                     {/* Desktop Nav Links */}
                     <ul className="hidden md:flex gap-8 font-secondary items-center">
-                        {navLinks.map((item, idx) => (
-                            <li key={item.path || `action-${idx}`}>
-                                {item.action ? (
-                                    <button
-                                        onClick={item.action}
-                                        className={`transition-all duration-300 ${language === 'ka'
-                                            ? 'nav-link-ka'
-                                            : 'nav-link-en'
-                                            } ${activeSection === item.activeId
-                                                ? 'text-off-white'
-                                                : 'text-off-white/70 hover:text-off-white'
-                                            }`}
-                                    >
-                                        {item.name}
-                                    </button>
-                                ) : item.isBrand ? (
+                        {navLinks.map((item) => (
+                            <li key={item.path}>
+                                {item.isBrand ? (
                                     <NavLink
                                         to={item.path}
                                         className={({ isActive }) =>
@@ -214,19 +183,9 @@ const MainLayout = ({ children }) => {
             {isMenuOpen && (
                 <div className="fixed inset-0 z-40 bg-obsidian/95 backdrop-blur-md flex flex-col items-center justify-center animate-fade-in">
                     <ul className="flex flex-col gap-8 text-center mb-12">
-                        {navLinks.map((item, idx) => (
-                            <li key={item.path || `action-${idx}`}>
-                                {item.action ? (
-                                    <button
-                                        onClick={item.action}
-                                        className={`font-header text-3xl uppercase tracking-widest transition-all duration-300 ${activeSection === item.activeId
-                                            ? 'text-off-white'
-                                            : 'text-off-white/70 hover:text-off-white'
-                                            }`}
-                                    >
-                                        {item.name}
-                                    </button>
-                                ) : item.isBrand ? (
+                        {navLinks.map((item) => (
+                            <li key={item.path}>
+                                {item.isBrand ? (
                                     <NavLink
                                         to={item.path}
                                         onClick={closeMenu}

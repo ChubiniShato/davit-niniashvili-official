@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Section from '../ui/Section';
 import Typography from '../ui/Typography';
+import { useLanguage } from '../context/LanguageContext';
 import { getBio } from '../api/api';
 
 const BioPage = () => {
+    const { t } = useLanguage();
     const [bio, setBio] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -22,7 +24,7 @@ const BioPage = () => {
         return (
             <Section className="min-h-[60vh] flex items-center justify-center">
                 <Typography variant="body" className="animate-pulse">
-                    Loading profile...
+                    Updating profile...
                 </Typography>
             </Section>
         );
@@ -32,9 +34,9 @@ const BioPage = () => {
         return (
             <Section className="min-h-[60vh] flex items-center justify-center text-center">
                 <div>
-                    <Typography variant="h3">Profile Unavailable</Typography>
+                    <Typography variant="h3">Information Unavailable</Typography>
                     <Typography variant="body" className="mt-4">
-                        Please check back later.
+                        Please try again later.
                     </Typography>
                 </div>
             </Section>
@@ -50,29 +52,29 @@ const BioPage = () => {
             <div className="grid md:grid-cols-[1fr_2fr] gap-12">
                 <div className="space-y-8">
                     <div>
-                        <Typography variant="tiny">Position</Typography>
+                        <Typography variant="tiny">{t('page.bio.position')}</Typography>
                         <Typography variant="h3">{bio.position || "—"}</Typography>
                     </div>
 
                     <div>
-                        <Typography variant="tiny">Current Team</Typography>
+                        <Typography variant="tiny">{t('page.bio.currentTeam')}</Typography>
                         <Typography variant="h3">{bio.currentTeam || "—"}</Typography>
                     </div>
 
                     {bio.previousTeam && (
                         <div>
-                            <Typography variant="tiny">Previous Team</Typography>
+                            <Typography variant="tiny">{t('page.bio.previousTeam')}</Typography>
                             <Typography variant="body">{bio.previousTeam}</Typography>
                         </div>
                     )}
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <Typography variant="tiny">Nationality</Typography>
+                            <Typography variant="tiny">{t('page.bio.nationality')}</Typography>
                             <Typography variant="body">{bio.nationality || "—"}</Typography>
                         </div>
                         <div>
-                            <Typography variant="tiny">Birth Date</Typography>
+                            <Typography variant="tiny">{t('page.bio.birthDate')}</Typography>
                             <Typography variant="body">{bio.birthDate || "—"}</Typography>
                         </div>
                     </div>
@@ -80,10 +82,10 @@ const BioPage = () => {
 
                 <div className="bg-black/20 p-8 rounded-lg border border-white/5">
                     <Typography variant="tiny" className="mb-4 block">
-                        About
+                        {t('page.bio.about')}
                     </Typography>
                     <Typography variant="body" className="whitespace-pre-wrap leading-relaxed">
-                        {bio.description || "Player description pending."}
+                        {bio.description || "Profile narrative pending."}
                     </Typography>
                 </div>
             </div>
