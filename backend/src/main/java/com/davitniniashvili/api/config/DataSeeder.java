@@ -31,6 +31,9 @@ public class DataSeeder implements CommandLineRunner {
         @Autowired
         private PlayerProfileRepository playerProfileRepository;
 
+        @Autowired
+        private PressMentionRepository pressMentionRepository;
+
         @Override
         public void run(String... args) throws Exception {
                 // Seed Player Stats
@@ -122,6 +125,64 @@ public class DataSeeder implements CommandLineRunner {
                                         "Stade Rochelais (La Rochelle)",
                                         "Lyon (LOU Rugby)",
                                         "Davit Niniashvili is a highly promising Georgian rugby union player known for his chaotic brilliance, exceptional pace, and unpredictable style. He has rapidly gained international recognition and played a pivotal role in Lyon's 2022 Challenge Cup victory."
+                        ));
+                }
+
+                // Seed Press Mentions
+                if (pressMentionRepository.count() == 0) {
+                        pressMentionRepository.save(new PressMention(
+                                null, "rugbyrama-2026-03-04-youth-core", "Rugbyrama",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.Analysis,
+                                "La Rochelle youth core analysis featuring Davit Niniashvili",
+                                "\"On accélère le processus avec les jeunes\" : le vieillissant Stade rochelais est devenu une véritable pépinière",
+                                "Rugbyrama highlighted the influence of the young La Rochelle core.",
+                                java.time.LocalDate.parse("2026-03-04"), "2026-03-04",
+                                "", false, true, true, 1, PressMention.RecordStatus.confirmed, "", ""
+                        ));
+                        pressMentionRepository.save(new PressMention(
+                                null, "lequipe-2025-09-03-la-rochelle-choice", "L’Équipe",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.Interview,
+                                "Niniashvili explains why he chose La Rochelle",
+                                "",
+                                "L’Équipe ran a major interview/profile around Niniashvili’s decision to join La Rochelle.",
+                                java.time.LocalDate.parse("2025-09-03"), "2025-09-03",
+                                "", false, true, true, 2, PressMention.RecordStatus.confirmed, "", ""
+                        ));
+                        pressMentionRepository.save(new PressMention(
+                                null, "rugbyrama-2026-02-28-castres-ratings", "Rugbyrama",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.MatchReport,
+                                "Rugbyrama’s player ratings for Castres–La Rochelle",
+                                "",
+                                "Rugbyrama’s player ratings highlighted Davit Niniashvili.",
+                                java.time.LocalDate.parse("2026-02-28"), "2026-02-28",
+                                "", false, true, true, 3, PressMention.RecordStatus.confirmed, "", ""
+                        ));
+                        pressMentionRepository.save(new PressMention(
+                                null, "rugbyrama-2026-01-30-development-interview", "Rugbyrama",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.Interview,
+                                "Tout le monde sait que je n’aime pas le jeu au pied...",
+                                "",
+                                "Rugbyrama focused on Niniashvili’s development.",
+                                java.time.LocalDate.parse("2026-01-30"), "2026-01-30",
+                                "", false, true, false, null, PressMention.RecordStatus.confirmed, "", ""
+                        ));
+                        pressMentionRepository.save(new PressMention(
+                                null, "lequipe-2025-09-02-top14-key-recruits", "L’Équipe",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.Analysis,
+                                "Niniashvili named among the Top 14’s key recruits",
+                                "",
+                                "L’Équipe included Niniashvili in its selection of standout recruits.",
+                                java.time.LocalDate.parse("2025-09-02"), "2025-09-02",
+                                "", false, true, false, null, PressMention.RecordStatus.confirmed, "", ""
+                        ));
+                        pressMentionRepository.save(new PressMention(
+                                null, "rugbyrama-2025-08-21-la-rochelle-start", "Rugbyrama",
+                                PressMention.SourceTier.A, "FR", PressMention.ContentType.Interview,
+                                "No pressure as Niniashvili prepares to begin at La Rochelle",
+                                "",
+                                "Rugbyrama published an interview-style piece on Niniashvili’s mindset.",
+                                java.time.LocalDate.parse("2025-08-21"), "2025-08-21",
+                                "", false, true, false, null, PressMention.RecordStatus.confirmed, "", ""
                         ));
                 }
         }
