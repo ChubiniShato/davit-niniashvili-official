@@ -83,7 +83,7 @@ const AdminContentBlocksPage = () => {
     if (loading) return <div className="p-20 text-white">Loading...</div>;
 
     return (
-        <div className="min-h-screen bg-black text-white p-8 md:p-20">
+        <div className="p-8 md:p-20">
             <div className="flex justify-between items-center mb-10">
                 <h1 className="text-3xl font-bold">Content Blocks</h1>
                 <button 

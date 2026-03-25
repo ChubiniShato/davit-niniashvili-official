@@ -14,7 +14,7 @@ const SloganReveal = () => {
         },
         fr: {
             base: 'Aime ce que tu fais — ',
-            highlight: 'de tout cœur !',
+            highlight: 'de tout cœur - TEST!',
             author: 'Davit Niniashvili',
             sloganClass: 'font-header tracking-normal',
             authorClass: 'font-header tracking-slogan-author'

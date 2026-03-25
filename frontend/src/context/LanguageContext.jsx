@@ -298,7 +298,7 @@ const translations = {
         'home.partners.officialAvailable': 'Partenaires officiels \u2014 S\u00e9lection active',
         'home.forBrands.cta': 'Collaborer avec Niniashvili',
         'page.contact.subtitle': 'Inqu\u00eates et repr\u00e9sentation professionnelle.',
-        'home.authority.slogan': 'Aime ce que tu fais \u2014 de tout c\u0153ur !',
+        'home.authority.slogan': 'Aime ce que tu fais \u2014 de tout c\u0153ur!',
         'home.authority.author': 'Davit Niniashvili',
         'home.authority.positioning': 'Performance Mondiale. Autorit\u00e9 d\'\u00c9lite.',
         'home.authority.status': 'Actuellement \u2014 Top14: Stade Rochelais | \u00c9quipe nationale de G\u00e9orgie',
