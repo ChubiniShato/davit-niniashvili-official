@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
+import { useContent } from '../../context/ContentContext';
 
 const CLIPS = [
     {
@@ -15,7 +16,8 @@ const CLIPS = [
 const Hero = () => {
     const containerRef = useRef(null);
     const videoRef = useRef(null);
-    const { language } = useLanguage();
+    const { language, t } = useLanguage();
+    const { getBlock } = useContent();
 
     // Logic Refs
     const isSwitching = useRef(false);
@@ -313,9 +315,7 @@ const Hero = () => {
                         <polyline points="17 17 7 17 7 7"></polyline>
                     </svg>
                     <p className="font-secondary text-xl md:text-2xl font-extrabold tracking-tight italic text-[var(--brand-gray)] hover:text-off-white border-b border-transparent group-hover:border-rochelais-gold transition-all duration-300 cursor-pointer mb-0">
-                        {language === 'ka' ? 'მთელი გულით!' :
-                            language === 'fr' ? 'De tout cœur!' :
-                                'Wholeheartedly!'}
+                        {language === 'ka' ? 'მთელი გულით!' : language === 'fr' ? 'De tout cœur!' : 'Wholeheartedly!'}
                     </p>
                 </Link>
             </div>
@@ -327,10 +327,11 @@ const Hero = () => {
                 `}</style>
                 <Link to="/for-brands" className="no-underline">
                     <span className="sponsor-badge inline-block font-secondary text-xs tracking-widest uppercase text-off-white/40 bg-black/30 border border-rochelais-gold/30 rounded-xl px-3 py-1 hover:text-off-white/70 transition-colors duration-300 cursor-pointer">
-                        Partner Selection Active
+                        {getBlock('home', 'hero', 'sponsor_badge', t('home.hero.sponsorBadge'))}
                     </span>
                 </Link>
             </div>
+
         </div>
     );
 };

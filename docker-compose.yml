@@ -4,35 +4,49 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: davit_db
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: davit_website
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${POSTGRES_DB:-davit_website}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
     ports:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
       - rugby-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-davit_website}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
     container_name: davit_backend
+    restart: unless-stopped
     ports:
       - "8081:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/davit_website
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-davit_website}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-password}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    env_file:
+      - .env
+    volumes:
+      # Persist career JSON, backups and runtime data
+      - ./backend/data:/app/data
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - rugby-net
 
   frontend:
     build: ./frontend
     container_name: davit_frontend
+    restart: unless-stopped
     ports:
       - "3000:80"
     depends_on:

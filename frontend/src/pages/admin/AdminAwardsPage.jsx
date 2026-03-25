@@ -92,7 +92,7 @@ const AdminAwardsPage = () => {
     if (loading) return <div className="p-10 text-white">Loading...</div>;
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white p-8 md:p-12">
+        <div className="p-8 md:p-12">
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-12">
                     <h1 className="text-3xl font-bold tracking-tight">Awards Management</h1>

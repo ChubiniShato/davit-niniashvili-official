@@ -35,6 +35,7 @@ export const createOrder = (orderData) => api.post('/orders', orderData);
 export const getAwards = () => api.get('/player/awards');
 export const getFeaturedPress = () => api.get('/content/press/featured');
 export const getPressArchive = () => api.get('/content/press');
+export const getContentBlocks = (params) => api.get('/content/blocks', { params });
 
 // Admin Awards CRUD
 export const getAdminAwards = () => api.get('/admin/awards');

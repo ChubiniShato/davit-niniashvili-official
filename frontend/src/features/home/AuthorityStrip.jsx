@@ -49,7 +49,7 @@ const AuthorityStrip = () => {
     const closingStatement = language === 'ka' 
         ? 'უმაღლესი დონის თამაში — გლობალური მასშტაბი!'
         : language === 'fr'
-        ? "Performance d'élite — Impact global !"
+        ? "Performance d'élite — Impact global!"
         : 'Elite Performance — Global Impact!';
 
     const primaryHighlights = [
