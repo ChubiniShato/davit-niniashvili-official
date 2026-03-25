@@ -13,11 +13,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin/player/profile")
-@CrossOrigin(origins = { "http://localhost:5173", "http://localhost:3000" })
 public class PlayerProfileController {
 
     @Autowired
     private PlayerProfileService playerProfileService;
+
+    @GetMapping
+    public ApiResponse<PlayerProfile> getProfile() {
+        PlayerProfile profile = playerProfileService.findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No player profile found"));
+        return ApiResponse.success(profile);
+    }
 
     @PutMapping
     public ApiResponse<PlayerProfile> updateProfile(@RequestBody PlayerProfileRequest request) {

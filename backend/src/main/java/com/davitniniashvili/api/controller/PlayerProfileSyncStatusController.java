@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin/sync/player-profile")
-@CrossOrigin(origins = { "http://localhost:5173", "http://localhost:3000" })
 public class PlayerProfileSyncStatusController {
 
     @Autowired

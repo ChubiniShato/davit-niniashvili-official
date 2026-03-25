@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/content/press")
-@CrossOrigin(origins = "*")
 public class PressMentionController {
 
     @Autowired

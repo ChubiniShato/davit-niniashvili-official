@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import com.davitniniashvili.api.model.PlayerProfile;
 import com.davitniniashvili.api.service.PlayerProfileService;
+import com.davitniniashvili.api.service.CareerService;
+import com.davitniniashvili.api.dto.CareerProfileDTO;
 
 @RestController
 @RequestMapping("/api/content")
-@CrossOrigin(origins = { "http://localhost:5173", "http://localhost:3000" })
 public class PublicContentController {
 
     @Autowired
@@ -25,6 +26,9 @@ public class PublicContentController {
     @Autowired
     private PlayerProfileService playerProfileService;
 
+    @Autowired
+    private CareerService careerService;
+
     @GetMapping("/stats")
     public List<PlayerStat> getAllStats() {
         return playerStatRepository.findAll();
@@ -33,6 +37,11 @@ public class PublicContentController {
     @GetMapping("/media")
     public List<MediaItem> getAllMedia() {
         return mediaItemRepository.findAll();
+    }
+
+    @GetMapping("/career")
+    public CareerProfileDTO getCareerProfile() {
+        return careerService.getCareerProfile();
     }
 
     @GetMapping("/bio")

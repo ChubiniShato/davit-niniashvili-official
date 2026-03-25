@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
-
-
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const { pathname } = useLocation();
     const { language, setLanguage, t } = useLanguage();
     const [activeSection, setActiveSection] = useState('home');
@@ -238,8 +237,9 @@ const MainLayout = ({ children }) => {
 
             {/* Main Content Area */}
             <main className={`relative z-10 ${mainPadding}`}>
-                {children}
+                <Outlet />
             </main>
+
 
         </div>
     );

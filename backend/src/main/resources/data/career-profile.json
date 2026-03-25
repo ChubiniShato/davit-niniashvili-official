@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "sourceText": "Career statistics sourced primarily from All.Rugby. Supplementary sources are cited where used.",
+    "primarySource": "All.Rugby",
+    "lastUpdated": "2026-03-24"
+  },
+  "overview": [
+    {
+      "team": "Stade Rochelais",
+      "season": null,
+      "competition": null,
+      "matches": 15,
+      "starts": 12,
+      "points": 20,
+      "tries": 4,
+      "wdl": "10-0-5",
+      "cards": "1-0",
+      "minutes": 960
+    },
+    {
+      "team": "Lyon (LOU Rugby)",
+      "season": null,
+      "competition": null,
+      "matches": 50,
+      "starts": 40,
+      "points": 45,
+      "tries": 9,
+      "wdl": "25-2-23",
+      "cards": "3-1",
+      "minutes": 3200
+    },
+    {
+      "team": "Georgia National Team",
+      "season": null,
+      "competition": null,
+      "matches": 46,
+      "starts": 43,
+      "points": 60,
+      "tries": 12,
+      "wdl": "28-1-17",
+      "cards": "2-0",
+      "minutes": 3150
+    }
+  ],
+  "seasons": [
+    {
+      "season": "2024-25",
+      "team": "Stade Rochelais",
+      "competition": "Top 14",
+      "matches": 15,
+      "starts": 12,
+      "points": 20,
+      "tries": 4,
+      "wdl": "10-0-5",
+      "cards": "1-0",
+      "minutes": 960
+    },
+    {
+      "season": "2024",
+      "team": "Georgia National Team",
+      "competition": "Autumn Nations Series",
+      "matches": 4,
+      "starts": 4,
+      "points": 10,
+      "tries": 2,
+      "wdl": "1-0-3",
+      "cards": "0-0",
+      "minutes": 320
+    },
+    {
+      "season": "2023-24",
+      "team": "Lyon (LOU Rugby)",
+      "competition": "Top 14",
+      "matches": 18,
+      "starts": 15,
+      "points": 15,
+      "tries": 3,
+      "wdl": "9-1-8",
+      "cards": "1-0",
+      "minutes": 1100
+    },
+    {
+      "season": "2023",
+      "team": "Georgia National Team",
+      "competition": "Rugby World Cup",
+      "matches": 4,
+      "starts": 4,
+      "points": 10,
+      "tries": 2,
+      "wdl": "2-0-2",
+      "cards": "0-0",
+      "minutes": 320
+    },
+    {
+      "season": "2022-23",
+      "team": "Lyon (LOU Rugby)",
+      "competition": "Top 14",
+      "matches": 20,
+      "starts": 16,
+      "points": 20,
+      "tries": 4,
+      "wdl": "11-1-8",
+      "cards": "1-1",
+      "minutes": 1250
+    },
+    {
+      "season": "2022-23",
+      "team": "Lyon (LOU Rugby)",
+      "competition": "Champions Cup",
+      "matches": 6,
+      "starts": 5,
+      "points": 5,
+      "tries": 1,
+      "wdl": "3-0-3",
+      "cards": "0-0",
+      "minutes": 380
+    },
+    {
+      "season": "2021-22",
+      "team": "Lyon (LOU Rugby)",
+      "competition": "Top 14",
+      "matches": 12,
+      "starts": 9,
+      "points": 10,
+      "tries": 2,
+      "wdl": "5-0-7",
+      "cards": "1-0",
+      "minutes": 850
+    },
+    {
+      "season": "2021-22",
+      "team": "Lyon (LOU Rugby)",
+      "competition": "EPCR Challenge Cup",
+      "matches": 6,
+      "starts": 6,
+      "points": 0,
+      "tries": 0,
+      "wdl": "5-0-1",
+      "cards": "0-0",
+      "minutes": 480
+    }
+  ],
+  "breakdown": [
+    {
+      "competition": "Top 14",
+      "season": null,
+      "team": null,
+      "matches": 65,
+      "starts": 52,
+      "points": 65,
+      "tries": 13,
+      "wdl": "35-2-28",
+      "cards": "4-1",
+      "minutes": 4160
+    },
+    {
+      "competition": "Champions Cup",
+      "season": null,
+      "team": null,
+      "matches": 6,
+      "starts": 5,
+      "points": 5,
+      "tries": 1,
+      "wdl": "3-0-3",
+      "cards": "0-0",
+      "minutes": 380
+    },
+    {
+      "competition": "EPCR Challenge Cup",
+      "season": null,
+      "team": null,
+      "matches": 6,
+      "starts": 6,
+      "points": 0,
+      "tries": 0,
+      "wdl": "5-0-1",
+      "cards": "0-0",
+      "minutes": 480
+    },
+    {
+      "competition": "Rugby World Cup",
+      "season": null,
+      "team": null,
+      "matches": 4,
+      "starts": 4,
+      "points": 10,
+      "tries": 2,
+      "wdl": "2-0-2",
+      "cards": "0-0",
+      "minutes": 320
+    },
+    {
+      "competition": "Autumn Nations Series",
+      "season": null,
+      "team": null,
+      "matches": 4,
+      "starts": 4,
+      "points": 10,
+      "tries": 2,
+      "wdl": "1-0-3",
+      "cards": "0-0",
+      "minutes": 320
+    }
+  ]
+}
