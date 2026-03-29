@@ -1,252 +1,366 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Section from '../ui/Section';
 import Typography from '../ui/Typography';
 import { useLanguage } from '../context/LanguageContext';
-import { sponsors } from '../config/sponsors';
-
-const PROOF_POINTS = {
-    en: [
-        'Stade Rochelais \u2014 Elite Top 14 & Champions Cup competitor',
-        'Georgia National Team \u2014 Established international performance',
-        'High-engagement digital audience across Europe & Georgia',
-        'International media coverage: Canal+, World Rugby, L\'\u00c9quipe',
-        'Strategic athlete brand with exponential reach potential',
-    ],
-    ka: [
-        'Stade Rochelais \u2014 Top 14 & Champions Cup \u10d4\u10da\u10d8\u10e2\u10d0\u10e0\u10e3\u10da\u10d8 \u10db\u10dd\u10dc\u10d0\u10ec\u10d8\u10da\u10d4',
-        '\u10e1\u10d0\u10e5\u10d0\u10e0\u10d7\u10d5\u10d4\u10da\u10dd\u10e1 \u10d4\u10e0\u10dd\u10d5\u10dc\u10e3\u10da\u10d8 \u10dc\u10d0\u10d9\u10e0\u10d4\u10d1\u10d8 \u2014 \u10db\u10d3\u10d2\u10e0\u10d0\u10d3\u10d8 \u10e1\u10d0\u10d4\u10e0\u10d7\u10d0\u10e8\u10dd\u10e0\u10d8\u10e1\u10dd \u10e8\u10d4\u10d3\u10d4\u10d2\u10d4\u10d1\u10d8',
-        '\u10db\u10d0\u10e6\u10d0\u10da\u10d8 \u10e9\u10d0\u10e0\u10d7\u10e3\u10da\u10dd\u10d1\u10d8\u10e1 \u10ea\u10d8\u10e4\u10e0\u10e3\u10da\u10d8 \u10d0\u10e3\u10d3\u10d8\u10e2\u10dd\u10e0\u10d8\u10d0 \u10d4\u10d5\u10e0\u10dd\u10de\u10d0\u10e1\u10d0 \u10d3\u10d0 \u10e1\u10d0\u10e5\u10d0\u10e0\u10d7\u10d5\u10d4\u10da\u10dd\u10e8\u10d8',
-        '\u10d2\u10d0\u10db\u10dd\u10e0\u10e9\u10d4\u10e3\u10da\u10d8 \u10db\u10d4\u10d3\u10d8\u10d0 \u10d2\u10d0\u10e8\u10e3\u10e5\u10d4\u10d1\u10d0: Canal+, World Rugby, L\'\u00c9quipe',
-        '\u10e1\u10e2\u10e0\u10d0\u10e2\u10d4\u10d2\u10d8\u10e3\u10da\u10d8 \u10e1\u10de\u10dd\u10e0\u10e2\u10e1\u10db\u10d4\u10dc\u10d8\u10e1 \u10d1\u10e0\u10d4\u10dc\u10d3\u10d8 \u10db\u10d0\u10e1\u10e8\u10e2\u10d0\u10d1\u10d8\u10e0\u10d4\u10d1\u10d0\u10d3\u10d8 \u10d4\u10e5\u10e1\u10de\u10dd\u10d6\u10d8\u10ea\u10d8\u10d8\u10d7',
-    ],
-    fr: [
-        'Stade Rochelais \u2014 comp\u00e9titeur d\'\u00e9lite Top 14 & Champions Cup',
-        '\u00c9quipe nationale de G\u00e9orgie \u2014 performance internationale reconnue',
-        'Audience digitale \u00e0 fort engagement en Europe et en G\u00e9orgie',
-        'Couverture m\u00e9diatique internationale : Canal+, World Rugby, L\'\u00c9quipe',
-        'Marque athl\u00e8te strat\u00e9gique avec potentiel de rayonnement exponentiel',
-    ],
-};
-
-const PACKAGES = {
-    en: [
-        {
-            name: 'Primary Partner',
-            slots: '01 Exclusive Slot',
-            highlight: true,
-            deliverables: [
-                'Homepage hero integration',
-                'Dedicated strategic brand page',
-                'Global co-branded social initiatives',
-                'Priority presence on all digital assets',
-                'Direct collaboration + quarterly impact reports',
-            ],
-            idealFor: 'Full-scale, exclusive digital authority.',
-        },
-        {
-            name: 'Official Partner',
-            slots: 'Limited Availability',
-            highlight: false,
-            deliverables: [
-                'Strategic logo placement',
-                'Systematic social media integration',
-                'Collaborative content development',
-                'Commercial visibility alignment',
-            ],
-            idealFor: 'Consistent market presence alongside an elite athlete.',
-        },
-        {
-            name: 'Supporting Partner',
-            slots: 'Open Selection',
-            highlight: false,
-            deliverables: [
-                'Logo placement on partnerships board',
-                'Professional social acknowledgement',
-                'Quarterly ecosystem highlights',
-            ],
-            idealFor: 'Emerging brands entering the premium sports market.',
-        },
-    ],
-    ka: [
-        {
-            name: '\u10db\u10d7\u10d0\u10d5\u10d0\u10e0\u10d8 \u10de\u10d0\u10e0\u10e2\u10dc\u10d8\u10dd\u10e0\u10d8',
-            slots: '01 \u10d4\u10e5\u10e1\u10d9\u10da\u10e3\u10d6\u10d8\u10e3\u10e0\u10d8 \u10d0\u10d3\u10d2\u10d8\u10da\u10d8',
-            highlight: true,
-            deliverables: [
-                '\u10db\u10d7\u10d0\u10d5\u10d0\u10e0 \u10d2\u10d5\u10d4\u10e0\u10d3\u10d6\u10d4 Hero \u10d8\u10dc\u10e2\u10d4\u10d2\u10e0\u10d0\u10ea\u10d8\u10d0',
-                '\u10d4\u10e5\u10e1\u10d9\u10da\u10e3\u10d6\u10d8\u10e3\u10e0\u10d8 \u10e1\u10e2\u10e0\u10d0\u10e2\u10d4\u10d2\u10d8\u10e3\u10da\u10d8 \u10d1\u10e0\u10d4\u10dc\u10d3 \u10d2\u10d5\u10d4\u10e0\u10d3\u10d8',
-                '\u10d2\u10da\u10dd\u10d1\u10d0\u10da\u10e3\u10e0\u10d8 co-branded \u10d9\u10d0\u10db\u10de\u10d0\u10dc\u10d8\u10d4\u10d1\u10d8',
-                '\u10de\u10e0\u10d8\u10dd\u10e0\u10d8\u10e2\u10d4\u10e2\u10e3\u10da\u10d8 \u10ec\u10d0\u10e0\u10db\u10dd\u10e9\u10d4\u10dc\u10d0 \u10ea\u10d8\u10e4\u10e0\u10e3\u10da \u10d0\u10e5\u10e2\u10d8\u10d5\u10d4\u10d1\u10d6\u10d4',
-                '\u10de\u10d8\u10e0\u10d3\u10d0\u10de\u10d8\u10e0\u10d8 \u10d9\u10dd\u10da\u10d0\u10d1\u10dd\u10e0\u10d0\u10ea\u10d8\u10d0 + \u10d9\u10d5\u10d0\u10e0\u10e2\u10d0\u10da\u10e3\u10e0\u10d8 \u10d0\u10dc\u10d2\u10d0\u10e0\u10d8\u10e8\u10d4\u10d1\u10d8',
-            ],
-            idealFor: '\u10e1\u10e0\u10e3\u10da\u10db\u10d0\u10e1\u10e8\u10e2\u10d0\u10d1\u10d8\u10d0\u10dc\u10d8, \u10d4\u10e5\u10e1\u10d9\u10da\u10e3\u10d6\u10d8\u10e3\u10e0\u10d8 \u10ea\u10d8\u10e4\u10e0\u10e3\u10da\u10d8 \u10d0\u10d5\u10e2\u10dd\u10e0\u10d8\u10e2\u10d4\u10e2\u10d8.',
-        },
-        {
-            name: '\u10dd\u10e4\u10d8\u10ea\u10d8\u10d0\u10da\u10e3\u10e0\u10d8 \u10de\u10d0\u10e0\u10e2\u10dc\u10d8\u10dd\u10e0\u10d8',
-            slots: '\u10e8\u10d4\u10d6\u10e6\u10e3\u10d3\u10e3\u10da\u10d8 \u10e0\u10d0\u10dd\u10d3\u10d4\u10dc\u10dd\u10d1\u10d0',
-            highlight: false,
-            deliverables: [
-                '\u10e1\u10e2\u10e0\u10d0\u10e2\u10d4\u10d2\u10d8\u10e3\u10da\u10d8 \u10da\u10dd\u10d2\u10dd \u10d8\u10dc\u10e2\u10d4\u10d2\u10e0\u10d0\u10ea\u10d8\u10d0',
-                '\u10e1\u10d8\u10e1\u10e2\u10d4\u10db\u10d0\u10e2\u10e3\u10e0\u10d8 \u10e9\u10d0\u10e0\u10d7\u10d5\u10d0 \u10e1\u10dd\u10ea\u10d8\u10d0\u10da\u10e3\u10e0 \u10db\u10d4\u10d3\u10d8\u10d0\u10e8\u10d8',
-                '\u10d9\u10dd\u10da\u10d0\u10d1\u10dd\u10e0\u10d0\u10ea\u10d8\u10e3\u10da\u10d8 \u10d9\u10dd\u10dc\u10e2\u10d4\u10dc\u10e2\u10d8\u10e1 \u10ec\u10d0\u10e0\u10db\u10dd\u10d4\u10d1\u10d0',
-                '\u10d9\u10dd\u10db\u10d4\u10e0\u10ea\u10d8\u10e3\u10da\u10d8 \u10ee\u10d8\u10da\u10d5\u10d0\u10d3\u10dd\u10d1\u10d8\u10e1 \u10d0\u10da\u10d0\u10d8\u10dc\u10db\u10d4\u10dc\u10e2\u10d8',
-            ],
-            idealFor: '\u10e1\u10e2\u10d0\u10d1\u10d8\u10da\u10e3\u10e0\u10d8 \u10d4\u10e5\u10e1\u10de\u10dd\u10d6\u10d8\u10ea\u10d8\u10d0 \u10d4\u10da\u10d8\u10e2\u10d0\u10e0\u10e3\u10da \u10e1\u10de\u10dd\u10e0\u10e2\u10e1\u10db\u10d4\u10dc\u10d7\u10d0\u10dc \u10d4\u10e0\u10d7\u10d0\u10d3.',
-        },
-        {
-            name: '\u10db\u10ee\u10d0\u10e0\u10d3\u10d0\u10db\u10ed\u10d4\u10e0\u10d8 \u10de\u10d0\u10e0\u10e2\u10dc\u10d8\u10dd\u10e0\u10d8',
-            slots: '\u10e6\u10d8\u10d0 \u10e8\u10d4\u10e0\u10e9\u10d4\u10d5\u10d0',
-            highlight: false,
-            deliverables: [
-                '\u10da\u10dd\u10d2\u10dd \u10de\u10d0\u10e0\u10e2\u10dc\u10d8\u10dd\u10e0\u10d4\u10d1\u10d8\u10e1 \u10d3\u10d0\u10e4\u10d0\u10d6\u10d4',
-                '\u10de\u10e0\u10dd\u10e4\u10d4\u10e1\u10d8\u10dd\u10dc\u10d0\u10da\u10e3\u10e0\u10d8 \u10d0\u10e6\u10d8\u10d0\u10e0\u10d4\u10d1\u10d0 \u10e1\u10dd\u10ea\u10d8\u10d0\u10da\u10e3\u10e0 \u10db\u10d4\u10d3\u10d8\u10d0\u10e8\u10d8',
-                '\u10d9\u10d5\u10d0\u10e0\u10e2\u10d0\u10da\u10e3\u10e0\u10d8 \u10d4\u10d9\u10dd\u10e1\u10d8\u10e1\u10e2\u10d4\u10db\u10e3\u10e0\u10d8 highlights',
-            ],
-            idealFor: '\u10db\u10d6\u10d0\u10e0\u10d3\u10d8 \u10d1\u10e0\u10d4\u10dc\u10d3\u10d4\u10d1\u10d8 \u10de\u10e0\u10d4\u10db\u10d8\u10e3\u10db \u10e1\u10de\u10dd\u10e0\u10e2\u10e3\u10da \u10d1\u10d0\u10d6\u10d0\u10e0\u10d6\u10d4.',
-        },
-    ],
-    fr: [
-        {
-            name: 'Partenaire Principal',
-            slots: '01 Place Exclusive',
-            highlight: true,
-            deliverables: [
-                'Int\u00e9gration Hero en page d\'accueil',
-                'Page de marque strat\u00e9gique d\u00e9di\u00e9e',
-                'Initiatives co-brand\u00e9es mondiales sur les r\u00e9seaux sociaux',
-                'Pr\u00e9sence prioritaire sur tous les supports digitaux',
-                'Collaboration directe + rapports d\'impact trimestriels',
-            ],
-            idealFor: 'Autorit\u00e9 digitale exclusive et \u00e0 grande \u00e9chelle.',
-        },
-        {
-            name: 'Partenaire Officiel',
-            slots: 'Disponibilit\u00e9 Limit\u00e9e',
-            highlight: false,
-            deliverables: [
-                'Placement strat\u00e9gique du logo',
-                'Int\u00e9gration syst\u00e9matique sur les r\u00e9seaux sociaux',
-                'D\u00e9veloppement de contenu collaboratif',
-                'Alignement de la visibilit\u00e9 commerciale',
-            ],
-            idealFor: 'Pr\u00e9sence march\u00e9 r\u00e9guli\u00e8re aux c\u00f4t\u00e9s d\'un athl\u00e8te d\'\u00e9lite.',
-        },
-        {
-            name: 'Partenaire de Soutien',
-            slots: 'S\u00e9lection Ouverte',
-            highlight: false,
-            deliverables: [
-                'Placement du logo sur le tableau des partenariats',
-                'Reconnaissance professionnelle sur les r\u00e9seaux sociaux',
-                'Points saillants trimestriels de l\'\u00e9cosyst\u00e8me',
-            ],
-            idealFor: 'Marques \u00e9mergentes entrant sur le march\u00e9 du sport premium.',
-        },
-    ],
-};
+import { collaborations } from '../config/collaborations';
 
 const ForBrandsPage = () => {
-    const { t, language } = useLanguage();
-    const proofPoints = PROOF_POINTS[language] || PROOF_POINTS.en;
-    const packages = PACKAGES[language] || PACKAGES.en;
-    const steps = [
-        { num: '01', label: t('page.forBrands.step1') },
-        { num: '02', label: t('page.forBrands.step2') },
-        { num: '03', label: t('page.forBrands.step3') },
-    ];
+    const { t } = useLanguage();
+    const formRef = useRef(null);
+    const [formStatus, setFormStatus] = useState('idle');
+    const [formData, setFormData] = useState({
+        company: '',
+        name: '',
+        position: '',
+        email: '',
+        interest: '',
+        category: '',
+        message: ''
+    });
+
+    const scrollToForm = (interestType = '', categoryType = '') => {
+        setFormData(prev => ({
+            ...prev,
+            interest: interestType || t('page.forBrands.form.interest.inquiry'),
+            category: categoryType || ''
+        }));
+        if (formRef.current) {
+            formRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormStatus('success');
+    };
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
 
     return (
-        <>
-            {/* A) Hero Header */}
-            <Section className="min-h-[40vh] flex items-end pb-10 bg-surface-base">
-                <div className="text-center w-full">
-                    <Typography variant="h1" className="text-rochelais-gold mb-4">
-                        {t('page.forBrands.title')}
+        <div className="bg-obsidian w-full pb-20">
+            {/* Section 1: Hero */}
+            <Section className="min-h-[80vh] flex flex-col items-center justify-center text-center pt-40 pb-24 bg-surface-base md:pt-48 md:pb-32">
+                <Typography variant="label" className="text-rochelais-gold/80 mb-6 tracking-widest uppercase text-sm font-semibold">
+                    {t('page.forBrands.s1.eyebrow')}
+                </Typography>
+                <div className="max-w-4xl mx-auto">
+                    <Typography variant="h1" className="text-off-white mb-8 text-4xl md:text-6xl lg:text-7xl tracking-tighter leading-none">
+                        {t('page.forBrands.s1.title')}
                     </Typography>
-                    <p className="font-primary text-base md:text-lg text-off-white/70 leading-relaxed max-w-2xl mx-auto">
-                        {t('page.forBrands.subtitle')}
-                    </p>
                 </div>
-            </Section>
-
-            {/* B) Proof Block */}
-            <Section className="bg-surface-base border-t border-divider">
-                <Typography variant="h2" className="text-off-white mb-10 text-center">
-                    {t('page.forBrands.proof')}
+                <Typography variant="h3" className="text-off-white/70 max-w-2xl mx-auto mb-12 font-normal text-lg md:text-xl leading-relaxed">
+                    {t('page.forBrands.s1.sub')}
                 </Typography>
-                <ul className="max-w-3xl mx-auto space-y-4">
-                    {proofPoints.map((point, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                            <span className="w-2 h-2 mt-2 bg-rochelais-gold rounded-full flex-shrink-0"></span>
-                            <span className="font-primary text-base text-off-white/80">{point}</span>
-                        </li>
-                    ))}
-                </ul>
-            </Section>
-
-            {/* C) Packages */}
-            <Section className="bg-obsidian border-t border-divider">
-                <Typography variant="h2" className="text-off-white mb-12 text-center">
-                    {t('page.forBrands.packages')}
-                </Typography>
-                <div className="grid md:grid-cols-3 gap-6">
-                    {packages.map((pkg, i) => (
-                        <div
-                            key={i}
-                            className={`rounded-lg p-6 flex flex-col ${pkg.highlight
-                                ? 'bg-surface-raised border border-rochelais-gold/30'
-                                : 'bg-surface-base border border-divider'
-                                }`}
-                        >
-                            <Typography variant="h3" className={`mb-2 ${pkg.highlight ? 'text-rochelais-gold' : 'text-off-white'}`}>
-                                {pkg.name}
-                            </Typography>
-                            <p className="font-secondary text-xs uppercase tracking-widest text-rochelais-gold/70 mb-5">
-                                {pkg.slots}
-                            </p>
-                            <ul className="space-y-2 mb-6 flex-1">
-                                {pkg.deliverables.map((d, j) => (
-                                    <li key={j} className="flex items-start gap-2">
-                                        <span className="text-rochelais-gold/50 mt-0.5">\u00b7</span>
-                                        <span className="font-primary text-sm text-off-white/70">{d}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <p className="font-primary text-sm text-off-white/50 italic border-t border-divider pt-4">
-                                {pkg.idealFor}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </Section>
-
-            {/* D) Process / Timeline */}
-            <Section className="bg-surface-base border-t border-divider">
-                <Typography variant="h2" className="text-off-white mb-12 text-center">
-                    {t('page.forBrands.process')}
-                </Typography>
-                <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                    {steps.map((step) => (
-                        <div key={step.num} className="text-center">
-                            <p className="font-secondary text-3xl text-rochelais-gold/30 mb-3">{step.num}</p>
-                            <p className="font-primary text-base text-off-white uppercase tracking-wide">{step.label}</p>
-                        </div>
-                    ))}
-                </div>
-            </Section>
-
-            {/* E) Single Conversion CTA */}
-            <Section className="bg-surface-raised border-t border-divider">
-                <div className="text-center">
-                    <a
-                        href="mailto:contact@davitniniashvili.com"
-                        className="inline-block font-secondary text-sm uppercase tracking-widest px-6 py-2.5 bg-transparent border border-rochelais-gold/60 text-rochelais-gold rounded-xl shadow-sm hover:bg-rochelais-gold hover:text-obsidian transition-all duration-300"
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full sm:w-auto">
+                    <button 
+                        onClick={() => scrollToForm()}
+                        className="w-full sm:w-auto px-8 py-4 bg-rochelais-gold text-obsidian font-secondary uppercase tracking-widest text-sm rounded-sm hover:bg-off-white transition-colors"
                     >
-                        {t('page.forBrands.inquiryCta')}
-                    </a>
+                        {t('page.forBrands.s1.cta1')}
+                    </button>
+                    <button 
+                        onClick={() => scrollToForm(t('page.forBrands.form.interest.mediakit'))}
+                        className="w-full sm:w-auto px-8 py-4 border border-divider text-off-white/80 font-secondary uppercase tracking-widest text-sm rounded-sm hover:border-off-white hover:text-off-white hover:bg-off-white/5 transition-colors"
+                    >
+                        {t('page.forBrands.s1.cta2')}
+                    </button>
                 </div>
             </Section>
-        </>
+
+            {/* Section 2: Why Brands Partner */}
+            <Section className="py-24 bg-surface-base border-t border-divider">
+                <div className="max-w-5xl mx-auto text-left">
+                    <Typography variant="h2" className="text-off-white mb-8 md:text-4xl">
+                        {t('page.forBrands.s2.title')}
+                    </Typography>
+                    <Typography variant="p" className="text-off-white/70 max-w-3xl mb-10 text-lg md:text-xl leading-relaxed">
+                        {t('page.forBrands.s2.body')}
+                    </Typography>
+                </div>
+            </Section>
+
+            {/* Section 3: Partnership Structure */}
+            <Section className="py-24 bg-surface-raised border-t border-divider">
+                <div className="max-w-5xl mx-auto text-center md:text-left md:flex gap-16 items-start">
+                    <div className="md:w-1/3 mb-10 md:mb-0 shrink-0">
+                        <Typography variant="label" className="text-rochelais-gold/80 uppercase tracking-widest block mb-4 text-sm">
+                            {t('page.forBrands.s3.eyebrow')}
+                        </Typography>
+                        <Typography variant="h2" className="text-off-white mb-4 md:text-3xl lg:text-4xl leading-tight">
+                            {t('page.forBrands.s3.title')}
+                        </Typography>
+                    </div>
+                    <div className="md:w-2/3 border-l-0 md:border-l border-rochelais-gold/20 md:pl-12">
+                        <Typography variant="h3" className="text-off-white/90 mb-6 font-normal md:text-2xl leading-snug">
+                            {t('page.forBrands.s3.sub')}
+                        </Typography>
+                        <Typography variant="p" className="text-off-white/70 text-lg leading-relaxed">
+                            {t('page.forBrands.s3.body')}
+                        </Typography>
+                    </div>
+                </div>
+            </Section>
+
+            {/* Section 4: Digital Partnership Opportunities */}
+            <Section className="py-32 bg-surface-base border-t border-divider">
+                <div className="max-w-6xl mx-auto mb-16 text-left">
+                    <Typography variant="h2" className="text-off-white mb-6 md:text-4xl">
+                        {t('page.forBrands.s4.title')}
+                    </Typography>
+                    <Typography variant="p" className="text-off-white/70 max-w-2xl text-lg leading-relaxed">
+                        {t('page.forBrands.s4.body')}
+                    </Typography>
+                </div>
+
+                <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                    {/* Main Digital Partner */}
+                    <div className="bg-surface-raised border border-rochelais-gold/60 p-10 flex flex-col relative rounded-sm shadow-[0_0_30px_rgba(232,168,0,0.05)] transform md:scale-105 z-10">
+                        <Typography variant="h3" className="text-rochelais-gold mb-4 text-2xl font-bold">
+                            {t('page.forBrands.cat.mainDigital')}
+                        </Typography>
+                        <Typography variant="p" className="text-off-white/90 mb-10 flex-grow text-lg leading-relaxed">
+                            {t('page.forBrands.cat.mainDigital.desc')}
+                        </Typography>
+                        <button 
+                            onClick={() => scrollToForm('', 'Main Digital Partner')}
+                            className="w-full py-4 bg-rochelais-gold text-obsidian font-secondary uppercase tracking-widest text-sm rounded-sm hover:bg-off-white transition-colors"
+                        >
+                            {t('page.forBrands.s4.cta')}
+                        </button>
+                    </div>
+
+                    {/* Digital Partner */}
+                    <div className="bg-surface-base border border-divider/60 p-10 flex flex-col rounded-sm hover:border-off-white/30 transition-colors">
+                        <Typography variant="h3" className="text-off-white mb-4 text-2xl">
+                            {t('page.forBrands.cat.digital')}
+                        </Typography>
+                        <Typography variant="p" className="text-off-white/70 mb-10 flex-grow text-lg leading-relaxed">
+                            {t('page.forBrands.cat.digital.desc')}
+                        </Typography>
+                        <button 
+                            onClick={() => scrollToForm('', 'Digital Partner')}
+                            className="w-full py-4 border border-off-white/20 text-off-white font-secondary uppercase tracking-widest text-sm rounded-sm hover:border-off-white/80 hover:bg-off-white/5 transition-colors"
+                        >
+                            {t('page.forBrands.s4.cta')}
+                        </button>
+                    </div>
+
+                    {/* Website Supporter */}
+                    <div className="bg-surface-base border border-divider/40 p-10 flex flex-col rounded-sm hover:border-off-white/20 transition-colors">
+                        <Typography variant="h3" className="text-off-white/80 mb-4 text-xl">
+                            {t('page.forBrands.cat.supporter')}
+                        </Typography>
+                        <Typography variant="p" className="text-off-white/60 mb-10 flex-grow text-lg leading-relaxed">
+                            {t('page.forBrands.cat.supporter.desc')}
+                        </Typography>
+                        <button 
+                            onClick={() => scrollToForm('', 'Website Supporter')}
+                            className="w-full py-4 border border-off-white/10 text-off-white/70 font-secondary uppercase tracking-widest text-sm rounded-sm hover:border-off-white/30 hover:bg-off-white/5 transition-colors"
+                        >
+                            {t('page.forBrands.s4.cta')}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Brand Partner Strip */}
+                <div className="max-w-6xl mx-auto mt-16 pt-12 border-t border-divider/40">
+                    <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 opacity-60 hover:opacity-100 transition-opacity">
+                        <div className="max-w-2xl text-left">
+                            <Typography variant="p" className="text-off-white/90 font-medium mb-2 tracking-widest uppercase text-sm">
+                                {t('page.forBrands.cat.brand')}
+                            </Typography>
+                            <Typography variant="p" className="text-off-white/50 text-base leading-relaxed">
+                                {t('page.forBrands.cat.brand.desc')}
+                            </Typography>
+                        </div>
+                        <div className="shrink-0">
+                            <button 
+                                onClick={() => scrollToForm('', 'Brand Partner')}
+                                className="px-6 py-3 border border-off-white/20 text-off-white/80 font-secondary uppercase tracking-widest text-xs rounded-sm hover:border-off-white/60 hover:text-off-white transition-colors whitespace-nowrap"
+                            >
+                                {t('page.forBrands.s4.cta')}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Section>
+
+            {/* Section 5: Clarification */}
+            <Section className="py-24 bg-surface-raised border-t border-divider">
+                <div className="max-w-5xl mx-auto text-left">
+                    <Typography variant="label" className="text-rochelais-gold/80 uppercase tracking-widest block mb-6 text-sm">
+                        {t('page.forBrands.s5.eyebrow')}
+                    </Typography>
+                    <Typography variant="h2" className="text-off-white mb-8 md:text-3xl lg:text-4xl leading-tight">
+                        {t('page.forBrands.s5.title')}
+                    </Typography>
+                    <Typography variant="p" className="text-off-white/70 text-lg md:text-xl leading-relaxed max-w-3xl">
+                        {t('page.forBrands.s5.body')}
+                    </Typography>
+                </div>
+            </Section>
+
+            {/* Section 6: Platform Role */}
+            <Section className="py-24 bg-surface-base border-t border-divider">
+                <div className="max-w-5xl mx-auto text-center md:text-left flex flex-col md:flex-row gap-12 md:gap-20 items-center">
+                    <div className="md:w-5/12">
+                        <Typography variant="h2" className="text-off-white md:text-4xl leading-tight">
+                            {t('page.forBrands.s6.title')}
+                        </Typography>
+                    </div>
+                    <div className="md:w-7/12">
+                        <Typography variant="p" className="text-off-white/70 text-lg leading-relaxed md:border-l border-rochelais-gold/20 md:pl-10">
+                            {t('page.forBrands.s6.body')}
+                        </Typography>
+                    </div>
+                </div>
+            </Section>
+
+            {/* Section 7: Selected Brand Collaborations */}
+            <Section className="py-32 bg-surface-raised border-t border-divider text-center">
+                <Typography variant="h2" className="text-off-white mb-16 md:text-3xl lg:text-4xl">
+                    {t('page.forBrands.s7.title')}
+                </Typography>
+                
+                <div className="flex flex-wrap justify-center items-center gap-4 mb-20 max-w-4xl mx-auto opacity-70">
+                    {collaborations && collaborations.map((c, i) => (
+                        <div key={i} className="flex items-center justify-center px-6 py-3 border border-divider/40 rounded-full bg-surface-base">
+                            <span className="font-primary text-sm tracking-widest text-off-white/60 lowercase">{c.name}</span>
+                        </div>
+                    ))}
+                </div>
+
+                <p className="text-xs tracking-wider uppercase text-off-white/30 max-w-2xl mx-auto">
+                    {t('page.forBrands.s7.body')}
+                </p>
+            </Section>
+
+            {/* Section 8: Professional Status */}
+            <Section className="py-24 bg-surface-base border-t border-divider">
+                <div className="max-w-5xl mx-auto text-left mb-16">
+                    <Typography variant="h2" className="text-off-white md:text-4xl">
+                        {t('page.forBrands.s8.title')}
+                    </Typography>
+                </div>
+                <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-x-16 gap-y-12 text-left shrink-0">
+                    <div className="flex flex-col gap-3">
+                        <div className="w-12 h-px bg-rochelais-gold/40 mb-1"></div>
+                        <Typography variant="p" className="text-off-white/80 text-lg md:text-xl leading-relaxed font-light">
+                            {t('page.forBrands.s8.p1')}
+                        </Typography>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <div className="w-12 h-px bg-rochelais-gold/40 mb-1"></div>
+                        <Typography variant="p" className="text-off-white/80 text-lg md:text-xl leading-relaxed font-light">
+                            {t('page.forBrands.s8.p2')}
+                        </Typography>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <div className="w-12 h-px bg-rochelais-gold/40 mb-1"></div>
+                        <Typography variant="p" className="text-off-white/80 text-lg md:text-xl leading-relaxed font-light">
+                            {t('page.forBrands.s8.p3')}
+                        </Typography>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <div className="w-12 h-px bg-rochelais-gold/40 mb-1"></div>
+                        <Typography variant="p" className="text-off-white/80 text-lg md:text-xl leading-relaxed font-light">
+                            {t('page.forBrands.s8.p4')}
+                        </Typography>
+                    </div>
+                </div>
+            </Section>
+
+            {/* Section 9: Partnership Inquiry */}
+            <div ref={formRef} className="scroll-mt-24">
+                <Section className="py-32 bg-surface-raised border-t border-divider">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-left mb-16 border-l-2 border-rochelais-gold/50 pl-8">
+                            <Typography variant="h2" className="text-off-white mb-4 md:text-4xl">
+                                {t('page.forBrands.s9.title')}
+                            </Typography>
+                            <Typography variant="p" className="text-off-white/70 text-lg max-w-2xl">
+                                {t('page.forBrands.s9.body')}
+                            </Typography>
+                        </div>
+
+                        {formStatus === 'success' ? (
+                            <div className="bg-surface-base p-16 text-center border border-divider rounded-sm">
+                                <Typography variant="h3" className="text-rochelais-gold font-normal">
+                                    {t('page.forBrands.form.success')}
+                                </Typography>
+                            </div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="bg-surface-base p-10 md:p-14 border border-divider/50 rounded-sm space-y-8 shadow-[0_4px_40px_rgba(0,0,0,0.3)]">
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.company')} *</label>
+                                        <input required name="company" value={formData.company} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors" />
+                                    </div>
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.name')} *</label>
+                                        <input required name="name" value={formData.name} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors" />
+                                    </div>
+                                </div>
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.email')} *</label>
+                                        <input required type="email" name="email" value={formData.email} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors" />
+                                    </div>
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.position')}</label>
+                                        <input name="position" value={formData.position} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors" />
+                                    </div>
+                                </div>
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.interest')} *</label>
+                                        <select required name="interest" value={formData.interest} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors appearance-none cursor-pointer">
+                                            <option value="">-- Select --</option>
+                                            <option value={t('page.forBrands.form.interest.inquiry')}>{t('page.forBrands.form.interest.inquiry')}</option>
+                                            <option value={t('page.forBrands.form.interest.mediakit')}>{t('page.forBrands.form.interest.mediakit')}</option>
+                                        </select>
+                                    </div>
+                                    <div className="flex flex-col gap-3">
+                                        <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.category')}</label>
+                                        <select name="category" value={formData.category} onChange={handleChange} className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors appearance-none cursor-pointer">
+                                            <option value="">-- Select --</option>
+                                            <option value={t('page.forBrands.cat.mainDigital')}>{t('page.forBrands.cat.mainDigital')}</option>
+                                            <option value={t('page.forBrands.cat.digital')}>{t('page.forBrands.cat.digital')}</option>
+                                            <option value={t('page.forBrands.cat.supporter')}>{t('page.forBrands.cat.supporter')}</option>
+                                            <option value={t('page.forBrands.cat.brand')}>{t('page.forBrands.cat.brand')}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-3">
+                                    <label className="text-xs font-secondary tracking-widest text-off-white/50">{t('page.forBrands.form.message')}</label>
+                                    <textarea name="message" value={formData.message} onChange={handleChange} rows="5" className="bg-obsidian w-full border border-divider/50 rounded-sm p-4 text-off-white outline-none focus:border-rochelais-gold/50 focus:bg-surface-raised transition-colors resize-none"></textarea>
+                                </div>
+                                <div className="pt-8 flex justify-start">
+                                    <button type="submit" className="w-full sm:w-auto px-12 py-4 bg-rochelais-gold text-obsidian font-secondary uppercase tracking-widest text-sm rounded-sm hover:bg-off-white transition-colors">
+                                        {t('page.forBrands.form.submit')}
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+                    </div>
+                </Section>
+            </div>
+
+            {/* Section 10: Final CTA */}
+            <Section className="py-24 bg-surface-base text-center border-t border-divider">
+                <Typography variant="h3" className="text-off-white mb-6 font-normal md:text-2xl">
+                    {t('page.forBrands.s10.title')}
+                </Typography>
+                <button 
+                    onClick={() => scrollToForm()}
+                    className="inline-block mt-4 text-rochelais-gold border-b border-rochelais-gold/30 hover:border-rochelais-gold transition-colors font-secondary uppercase tracking-widest text-sm pb-2"
+                >
+                    {t('page.forBrands.s10.cta1')}
+                </button>
+            </Section>
+        </div>
     );
 };
 

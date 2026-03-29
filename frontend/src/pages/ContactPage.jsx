@@ -18,39 +18,44 @@ const ContactPage = () => {
                     </Typography>
                 </div>
 
-                <div className="max-w-xl mx-auto space-y-8 text-center mb-16">
-                    {/* Email */}
+                <div className="max-w-xl mx-auto space-y-12 text-center mb-16">
+                    {/* General */}
                     <div>
-                        <p className="font-secondary text-xs uppercase tracking-widest text-off-white/50 mb-2">Email</p>
+                        <p className="font-secondary text-xs uppercase tracking-widest text-off-white/50 mb-3">
+                            {t('page.contact.labels.general')}
+                        </p>
                         <a
-                            href="mailto:contact@davitniniashvili.com"
-                            className="font-primary text-lg text-rochelais-gold hover:text-off-white transition-colors duration-300"
+                            href="mailto:info@dniniashvili.com"
+                            className="font-primary text-xl text-rochelais-gold hover:text-off-white transition-colors duration-300"
                         >
-                            contact@davitniniashvili.com
+                            info@dniniashvili.com
                         </a>
                     </div>
 
-                    {/* Social */}
+                    {/* Partnerships */}
                     <div>
-                        <p className="font-secondary text-xs uppercase tracking-widest text-off-white/50 mb-3">Social</p>
-                        <div className="flex justify-center gap-6">
-                            <a
-                                href="https://www.instagram.com/davit_niniashvili/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-secondary text-sm uppercase tracking-widest text-off-white/60 hover:text-rochelais-gold transition-colors duration-300"
-                            >
-                                Instagram
-                            </a>
-                            <a
-                                href="https://www.facebook.com/profile.php?id=100063606498498"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-secondary text-sm uppercase tracking-widest text-off-white/60 hover:text-rochelais-gold transition-colors duration-300"
-                            >
-                                Facebook
-                            </a>
-                        </div>
+                        <p className="font-secondary text-xs uppercase tracking-widest text-off-white/50 mb-3">
+                            {t('page.contact.labels.partnerships')}
+                        </p>
+                        <a
+                            href="mailto:partners@dniniashvili.com"
+                            className="font-primary text-xl text-rochelais-gold hover:text-off-white transition-colors duration-300"
+                        >
+                            partners@dniniashvili.com
+                        </a>
+                    </div>
+
+                    {/* Press */}
+                    <div>
+                        <p className="font-secondary text-xs uppercase tracking-widest text-off-white/50 mb-3">
+                            {t('page.contact.labels.press')}
+                        </p>
+                        <a
+                            href="mailto:press@dniniashvili.com"
+                            className="font-primary text-xl text-rochelais-gold hover:text-off-white transition-colors duration-300"
+                        >
+                            press@dniniashvili.com
+                        </a>
                     </div>
                 </div>
 

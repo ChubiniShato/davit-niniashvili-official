@@ -13,16 +13,7 @@ const SECTION_TITLE = {
 
 const HighlightsSection = () => {
     const { language } = useLanguage();
-    const [activePreviewId, setActivePreviewId] = useState(null);
     const [modalTeam, setModalTeam] = useState(null);
-
-    const handlePreviewStart = useCallback((id) => {
-        setActivePreviewId(id);
-    }, []);
-
-    const handlePreviewStop = useCallback(() => {
-        setActivePreviewId(null);
-    }, []);
 
     const handleCardClick = useCallback((card) => {
         setModalTeam(card);
@@ -44,9 +35,6 @@ const HighlightsSection = () => {
                             key={card.id}
                             card={card}
                             index={i}
-                            isPreviewActive={activePreviewId === card.id}
-                            onPreviewStart={() => handlePreviewStart(card.id)}
-                            onPreviewStop={handlePreviewStop}
                             onCardClick={handleCardClick}
                         />
                     ))}

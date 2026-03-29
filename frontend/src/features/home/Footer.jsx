@@ -10,10 +10,10 @@ const Footer = () => {
                     © {year} Davit Niniashvili. All rights reserved.
                 </p>
                 <a
-                    href="mailto:contact@davitniniashvili.com"
+                    href="mailto:info@dniniashvili.com"
                     className="font-secondary text-xs uppercase tracking-widest text-rochelais-gold hover:text-off-white transition-colors duration-300"
                 >
-                    contact@davitniniashvili.com
+                    info@dniniashvili.com
                 </a>
             </div>
         </footer>

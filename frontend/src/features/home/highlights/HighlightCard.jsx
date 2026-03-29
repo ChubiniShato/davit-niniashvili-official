@@ -1,186 +1,70 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useLanguage } from '../../../context/LanguageContext';
 
 const HighlightCard = ({
     card,
     index,
-    isPreviewActive,
-    onPreviewStart,
-    onPreviewStop,
     onCardClick,
 }) => {
     const { language } = useLanguage();
     const displayName = typeof card.teamName === 'object'
         ? (card.teamName[language] || card.teamName.en)
         : card.teamName;
-    const videoRef = useRef(null);
-    const hoverTimeoutRef = useRef(null);
-    const timeupdateHandlerRef = useRef(null);
-    const [isPreviewing, setIsPreviewing] = useState(false);
-    const [canHover, setCanHover] = useState(false);
     const [reducedMotion, setReducedMotion] = useState(false);
 
     // SSR-safe media query detection
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        setCanHover(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
         setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     }, []);
-
-    // Cleanup helper — stops preview, releases resources
-    const stopPreview = useCallback(() => {
-        clearTimeout(hoverTimeoutRef.current);
-        hoverTimeoutRef.current = null;
-
-        const video = videoRef.current;
-        if (!video) return;
-
-        // Remove timeupdate listener
-        if (timeupdateHandlerRef.current) {
-            video.removeEventListener('timeupdate', timeupdateHandlerRef.current);
-            timeupdateHandlerRef.current = null;
-        }
-
-        video.pause();
-        video.removeAttribute('src');
-        video.load(); // release network/buffer
-
-        setIsPreviewing(false);
-        onPreviewStop();
-    }, [onPreviewStop]);
-
-    // Unmount cleanup
-    useEffect(() => {
-        return () => {
-            clearTimeout(hoverTimeoutRef.current);
-            const video = videoRef.current;
-            if (video) {
-                if (timeupdateHandlerRef.current) {
-                    video.removeEventListener('timeupdate', timeupdateHandlerRef.current);
-                }
-                video.pause();
-                video.removeAttribute('src');
-                video.load();
-            }
-        };
-    }, []);
-
-    const handleMouseEnter = useCallback(() => {
-        if (!canHover) return;
-
-        hoverTimeoutRef.current = setTimeout(async () => {
-            const video = videoRef.current;
-            if (!video) return;
-
-            video.src = card.videoSrc;
-
-            const onMeta = async () => {
-                video.currentTime = card.previewStart;
-
-                // Attach segment loop handler
-                const onTimeUpdate = () => {
-                    if (video.currentTime >= card.previewEnd - 0.05) {
-                        video.currentTime = card.previewStart;
-                    }
-                };
-                timeupdateHandlerRef.current = onTimeUpdate;
-                video.addEventListener('timeupdate', onTimeUpdate);
-
-                try {
-                    await video.play();
-                    setIsPreviewing(true);
-                    onPreviewStart();
-                } catch {
-                    // Autoplay blocked — keep poster visible
-                    video.removeEventListener('timeupdate', onTimeUpdate);
-                    timeupdateHandlerRef.current = null;
-                }
-            };
-
-            video.addEventListener('loadedmetadata', onMeta, { once: true });
-        }, 400);
-    }, [canHover, card, onPreviewStart]);
-
-    const handleMouseLeave = useCallback(() => {
-        if (!canHover) return;
-        stopPreview();
-    }, [canHover, stopPreview]);
-
-    // If another card started previewing, stop this one
-    useEffect(() => {
-        if (!isPreviewActive && isPreviewing) {
-            stopPreview();
-        }
-    }, [isPreviewActive, isPreviewing, stopPreview]);
-
-    const handleClick = useCallback(() => {
-        stopPreview();
-        onCardClick(card);
-    }, [card, onCardClick, stopPreview]);
 
     const handleKeyDown = useCallback(
         (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                handleClick();
+                onCardClick(card);
             }
         },
-        [handleClick]
+        [card, onCardClick]
     );
-
-    const transitionClass = reducedMotion
-        ? ''
-        : 'transition-opacity duration-300';
 
     return (
         <button
             type="button"
             className="relative w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-off-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian group"
-            style={{ aspectRatio: '3 / 4' }}
+            style={{ aspectRatio: '4 / 5' }}
             aria-label={`Watch ${displayName} highlights`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleClick}
+            onClick={() => onCardClick(card)}
             onKeyDown={handleKeyDown}
         >
-            <div className={`absolute inset-0 overflow-hidden rounded-xl bg-[#C2B7AA] border border-black/5 [box-shadow:0_18px_45px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.35)] ${reducedMotion ? '' : 'transition-transform duration-300'} group-hover:scale-[1.03]`}
+            <div className={`absolute inset-0 overflow-hidden rounded-xl bg-surface-base border border-black/10 transition-all duration-700 ease-out [box-shadow:0_20px_50px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.15)] group-hover:shadow-[0_22px_55px_rgba(0,0,0,0.5)] ${reducedMotion ? 'transition-none' : ''}`}
             >
-                {/* Main logo — centered, lifted for optical balance */}
-                <div className="absolute inset-0 flex items-center justify-center -translate-y-[8%] pointer-events-none z-[1]">
+                {/* Background Layer — Clean premium dark surface, no visible poster */}
+                <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-br from-surface-raised via-obsidian to-black">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+                </div>
+
+                {/* Main logo Layer — Subtle Support Plate, upper-third composition */}
+                <div className="absolute inset-x-0 top-6 lg:top-8 bottom-[35%] flex flex-col items-center justify-center pointer-events-none z-[1]">
+                    {/* Subdued normalization disk */}
+                    <div className="absolute top-1/2 -translate-y-1/2 w-[50%] md:w-[45%] aspect-square rounded-full bg-white/[0.04] shadow-[0_4px_16px_rgba(0,0,0,0.1)] pointer-events-none" />
+                    
+                    {/* Foreground dominant visual anchor */}
                     <img
                         src={card.logo}
                         alt={`${displayName} logo`}
                         loading={index <= 1 ? 'eager' : 'lazy'}
                         decoding="async"
-                        className="w-[92%] max-h-[72%] object-contain"
+                        className="relative w-[88%] h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)] z-[2] group-hover:-translate-y-1.5 transition-transform duration-700 ease-out"
                     />
                 </div>
 
-                {/* Video preview overlay — hover only */}
-                <video
-                    ref={videoRef}
-                    muted
-                    playsInline
-                    preload="none"
-                    className={`absolute inset-0 w-full h-full object-cover z-[2] ${transitionClass} ${isPreviewing ? 'opacity-100' : 'opacity-0'
-                        }`}
-                />
-
-                {/* Play icon — always centered, top layer */}
-                <div className={`absolute inset-0 flex items-center justify-center pointer-events-none z-[3] ${reducedMotion ? '' : 'transition-opacity duration-300'} opacity-0 group-hover:opacity-100`}>
-                    <div className="w-14 h-14 rounded-full bg-black/50 border border-off-white/30 flex items-center justify-center backdrop-blur-sm">
-                        <svg className="w-6 h-6 text-off-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z" />
-                        </svg>
-                    </div>
-                </div>
-
                 {/* Team info — bottom left */}
-                <div className="absolute bottom-3 left-3 flex flex-col gap-0.5 pointer-events-none z-[3]">
-                    <span className="text-obsidian font-primary text-lg font-semibold tracking-wide leading-tight">
+                <div className="absolute bottom-5 left-5 flex flex-col gap-0.5 pointer-events-none z-[3]">
+                    <span className="text-off-white font-primary text-lg font-semibold tracking-wide leading-tight drop-shadow-md transition-colors duration-700 group-hover:text-white">
                         {displayName}
                     </span>
-                    <span className="text-obsidian/70 font-secondary text-sm uppercase tracking-widest leading-tight">
+                    <span className="text-off-white/70 font-secondary text-xs uppercase tracking-widest leading-tight transition-colors duration-700 group-hover:text-off-white/90">
                         {card.years}
                     </span>
                 </div>
